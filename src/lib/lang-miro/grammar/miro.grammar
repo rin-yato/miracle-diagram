@@ -1,0 +1,27 @@
+@top Database { Table }
+
+Table { TableName "{" commaSep<Column>? "}" }
+
+Column { ColumnName ColumnType list<Constraint>? Relationship? }
+
+Relationship { "->" TableName "." ColumnName }
+
+@tokens {
+  TableName { Identifier }
+  ColumnName { Identifier }
+  ColumnType { Identifier }
+  Constraint { Identifier }
+  space { $[\r\t\n ] }
+  Identifier { $[A-Za-z_]+ }
+}
+
+@skip { space }
+
+list<item> { item (item)* }
+
+commaSep<item> { item ("," item?)* }
+
+
+@external propSource MiroStyleTags from "../highlight"
+
+@detectDelim
