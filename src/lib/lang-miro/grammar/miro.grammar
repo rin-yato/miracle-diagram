@@ -13,6 +13,7 @@ Relationship { "->" TableName "." ColumnName }
   Constraint { Identifier }
   space { $[\r\t\n ] }
   Identifier { $[A-Za-z_]+ }
+  "{" "}"
 }
 
 @skip { space }
