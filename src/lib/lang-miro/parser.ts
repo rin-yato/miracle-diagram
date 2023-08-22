@@ -1,4 +1,4 @@
-import { Relationship, Table } from '@/types/table';
+import { Relationship, Table, relationshipSchema } from '@/lib/table';
 import { SyntaxNode } from '@lezer/common';
 import { parser } from './grammar/miro';
 
@@ -39,15 +39,22 @@ export class MiroLang {
           const relationshipNode = columnNode.getChild('Relationship');
 
           const relationship: Relationship | null = relationshipNode && {
-            tableName: this.nodeToString(relationshipNode.firstChild!),
-            columnName: this.nodeToString(relationshipNode.lastChild!),
+            source: { tableName, columnName },
+            target: {
+              tableName: this.nodeToString(relationshipNode.firstChild!),
+              columnName: this.nodeToString(relationshipNode.lastChild!),
+            },
           };
+
+          const validRelationship = relationshipSchema.safeParse(relationship);
 
           return {
             name: columnName,
             type: columnType,
             constraints: columnConstraints,
-            relationships: relationship || undefined,
+            relationships: validRelationship.success
+              ? validRelationship.data
+              : undefined,
           };
         });
 

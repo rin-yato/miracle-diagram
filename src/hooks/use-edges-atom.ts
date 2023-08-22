@@ -1,6 +1,13 @@
 import { edgesAtom } from '@/jotai/edges-atom';
+import { tablesAtom } from '@/jotai/table-atom';
+import {
+  Relationship,
+  generateRelationshipId,
+  isValidRelationship,
+} from '@/lib/table';
 import { useAtom } from 'jotai';
-import { useCallback } from 'react';
+import _ from 'lodash';
+import { useCallback, useEffect } from 'react';
 import {
   Connection,
   Edge,
@@ -11,13 +18,34 @@ import {
 
 export function useEdgesAtom() {
   const [edges, setEdges] = useAtom(edgesAtom);
+  const [tables] = useAtom(tablesAtom);
 
   const connectEdge = useCallback(
-    (params: Edge | Connection) =>
-      setEdges(prev => addEdge({ ...params, type: 'button-edge' }, prev)),
-    [setEdges],
-  );
+    (params: Edge | Connection) => {
+      const relationship: Relationship = {
+        source: {
+          tableName: params.source!,
+          columnName: params.sourceHandle?.split('-')[0] || '',
+        },
+        target: {
+          tableName: params.target!,
+          columnName: params.targetHandle?.split('-')[0] || '',
+        },
+      };
 
+      if (!isValidRelationship({ relationship, tables })) return;
+
+      const id = generateRelationshipId(relationship);
+
+      setEdges(prev =>
+        addEdge(
+          { ...params, type: 'button-edge', id, data: relationship },
+          prev,
+        ),
+      );
+    },
+    [setEdges, tables],
+  );
 
   const removeEdge = useCallback(
     (edgeId: string) => {
@@ -33,5 +61,11 @@ export function useEdgesAtom() {
     [setEdges],
   );
 
-  return { edges, setEdges, connectEdge, removeEdge, onEdgesChange };
+  return {
+    edges,
+    setEdges,
+    connectEdge,
+    removeEdge,
+    onEdgesChange,
+  };
 }
