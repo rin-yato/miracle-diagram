@@ -1,19 +1,27 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import CodeMirror from '@uiw/react-codemirror';
+import CodeMirror, { basicSetup } from '@uiw/react-codemirror';
 import { tokyoNight } from '@uiw/codemirror-theme-tokyo-night';
 import { materialLight } from '@uiw/codemirror-theme-material';
 import { useTheme } from 'next-themes';
-import { parseInput } from '@/lib/parser';
 import { useDebouncedState } from '@mantine/hooks';
 import { useTables } from '@/hooks/use-tables';
+import { miro } from '@/lib/lang-miro';
+import { MiroLang } from '@/lib/lang-miro/parser';
 
 const initialCode = `
 users {
-  id int pk
-  name string
-  email string
+  id int pk,
+  name string,
+  email string null
+}
+
+posts {
+  id int pk,
+  author_id int fk,
+  title string,
+  content string
 }
 `;
 
@@ -23,9 +31,8 @@ export function CodeEditor() {
   const { setTables } = useTables();
 
   useEffect(() => {
-    const result = parseInput(code);
-    setTables(result);
-    console.log('result', result);
+    const parsedTables = new MiroLang(code).parse();
+    setTables(parsedTables);
   }, [code, setTables]);
 
   return (
@@ -37,7 +44,12 @@ export function CodeEditor() {
       theme={resolvedTheme === 'dark' ? tokyoNight : materialLight}
       style={{
         fontSize: 22,
+        height: '100%',
       }}
+      basicSetup={{
+        tabSize: 2,
+      }}
+      extensions={[miro()]}
     />
   );
 }
