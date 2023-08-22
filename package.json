@@ -31,6 +31,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "jotai": "^2.3.1",
+    "lodash": "^4.17.21",
     "lucide-react": "0.266.0-beta.0",
     "next": "13.4.12",
     "next-themes": "^0.2.1",
@@ -43,6 +44,7 @@
     "zod": "^3.22.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.197",
     "@types/node": "20.5.0",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
