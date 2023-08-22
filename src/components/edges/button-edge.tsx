@@ -7,13 +7,9 @@ import {
 } from 'reactflow';
 import { Button } from '../ui/button';
 import { Icons } from '../icons';
+import { useEdgesAtom } from '@/hooks/use-edges-atom';
 
-const onEdgeClick = (evt: MouseEvent, id: string) => {
-  evt.stopPropagation();
-  alert(`remove ${id}`);
-};
-
-export function ButtonEdge({
+export function ButtonEdgeRaw({
   id,
   sourceX,
   sourceY,
@@ -33,6 +29,8 @@ export function ButtonEdge({
     targetY,
     targetPosition,
   });
+
+  const { removeEdge } = useEdgesAtom();
 
   return (
     <React.Fragment>
@@ -57,7 +55,7 @@ export function ButtonEdge({
               size="icon"
               variant="outline"
               className="w-6 h-6 rounded-full"
-              onClick={event => onEdgeClick(event, id)}
+              onClick={event => removeEdge(id)}
             >
               <Icons.X className="w-4 h-4" />
             </Button>
@@ -67,3 +65,5 @@ export function ButtonEdge({
     </React.Fragment>
   );
 }
+
+export const ButtonEdge = React.memo(ButtonEdgeRaw);
