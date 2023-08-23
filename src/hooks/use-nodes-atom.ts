@@ -9,7 +9,7 @@ export function useNodesAtom() {
 
   const addNode = useCallback(
     (input: Node) => {
-      setNodes(prev => [...prev, { ...input, type: 'custom-default' }]);
+      setNodes(prev => [...prev, { ...input, type: 'floating-node' }]);
     },
     [setNodes],
   );

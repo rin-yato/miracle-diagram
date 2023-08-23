@@ -13,6 +13,7 @@ import { ButtonEdge } from './edges/button-edge';
 import { useNodesAtom } from '@/hooks/use-nodes-atom';
 import { useEdgesAtom } from '@/hooks/use-edges-atom';
 import { CustomDefaultNode } from './nodes/custom-default';
+import { FloatingNode } from './nodes/floating-nodes';
 
 const edgeTypes = {
   'button-edge': ButtonEdge,
@@ -20,6 +21,7 @@ const edgeTypes = {
 
 const nodeTypes = {
   'custom-default': CustomDefaultNode,
+  'floating-node': FloatingNode,
 };
 
 export function Flow() {

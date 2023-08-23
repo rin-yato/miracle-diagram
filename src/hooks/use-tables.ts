@@ -15,11 +15,9 @@ import { useEdgesAtom } from './use-edges-atom';
 
 export function useTables() {
   const [tables, setTables] = useAtom(tablesAtom);
-  const { addNode, removeNode, updateNodesFromTables, nodes } =
-    useNodesAtom();
+  const { addNode, removeNode, updateNodesFromTables, nodes } = useNodesAtom();
 
-  const { connectEdge, edges, removeEdge } =
-    useEdgesAtom();
+  const { connectEdge, edges, removeEdge } = useEdgesAtom();
 
   const addTable = useCallback(
     (table: Table) => {

@@ -1,36 +1,55 @@
-import React, { MouseEvent } from 'react';
+import React, { useCallback } from 'react';
 import {
   BaseEdge,
   EdgeLabelRenderer,
   EdgeProps,
   getBezierPath,
+  useStore,
 } from 'reactflow';
 import { Button } from '../ui/button';
 import { Icons } from '../icons';
 import { useEdgesAtom } from '@/hooks/use-edges-atom';
+import { getEdgeParams } from '@/lib/floating';
 
 export function ButtonEdgeRaw({
   id,
-  sourceX,
-  sourceY,
   label,
-  targetX,
-  targetY,
-  sourcePosition,
-  targetPosition,
   style = {},
+  source,
+  target,
+  sourceHandleId,
+  targetHandleId,
   markerEnd,
 }: EdgeProps) {
-  const [edgePath, labelX, labelY] = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+  const sourceNode = useStore(
+    useCallback(store => store.nodeInternals.get(source), [source]),
+  );
+
+  const targetNode = useStore(
+    useCallback(store => store.nodeInternals.get(target), [target]),
+  );
 
   const { removeEdge } = useEdgesAtom();
+
+  if (!sourceNode || !targetNode) return null;
+
+  const { sx, sy, tx, ty, sourcePos, targetPos } = getEdgeParams(
+    sourceNode,
+    targetNode,
+    {
+      sourceHandleId: sourceHandleId ?? '',
+      targetHandleId: targetHandleId ?? '',
+    },
+  );
+
+  const [edgePath, labelX, labelY] = getBezierPath({
+    sourceX: sx,
+    sourceY: sy,
+    sourcePosition: sourcePos,
+    targetX: tx,
+    targetY: ty,
+    targetPosition: targetPos,
+  });
 
   return (
     <React.Fragment>

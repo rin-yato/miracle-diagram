@@ -61,6 +61,12 @@ export function useEdgesAtom() {
     [setEdges],
   );
 
+  useEffect(() => {
+    console.log('use-edges-atom.ts');
+    console.log('edges', edges);
+    console.log('tables', tables);
+  }, [edges, tables]);
+
   return {
     edges,
     setEdges,
