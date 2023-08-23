@@ -28,6 +28,9 @@ import {
   Settings,
   Trash2,
   User,
+  FileJson2,
+  FileInput,
+  FileOutput,
   X,
 } from 'lucide-react';
 
@@ -60,6 +63,9 @@ export const Icons = {
   Mail,
   Trash2,
   Pen,
+  FileJson2,
+  FileInput,
+  FileOutput,
   MoreHorizontal,
   IterationCw,
   X,
