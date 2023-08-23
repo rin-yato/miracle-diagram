@@ -56,6 +56,11 @@ export function useTables() {
       newTableArray: tables,
     });
 
+    console.log('oldTables', oldTables);
+    console.log('newTables', tables);
+    console.log('addedTables', addedTables);
+    console.log('removedTables', removedTables);
+
     const { addedRelationships, removedRelationships } =
       getRelationshipsChanges({
         oldRelationships: oldRelationships,
@@ -83,9 +88,9 @@ export function useTables() {
       connectEdge({
         id: generateRelationshipId(relationship),
         source: relationship.source.tableName,
-        sourceHandle: `${relationship.source.columnName}-right`,
+        sourceHandle: `${relationship.source.columnName}`,
         target: relationship.target.tableName,
-        targetHandle: `${relationship.target.columnName}-left`,
+        targetHandle: `${relationship.target.columnName}`,
         data: relationship,
         type: 'button-edge',
       });

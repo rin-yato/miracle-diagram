@@ -1,5 +1,7 @@
 import { edgesAtom } from '@/jotai/edges-atom';
+import { mirolangAtom } from '@/jotai/miro-lang-atom';
 import { tablesAtom } from '@/jotai/table-atom';
+import { MiroLang } from '@/lib/lang-miro/parser';
 import {
   Relationship,
   generateRelationshipId,
@@ -19,17 +21,18 @@ import {
 export function useEdgesAtom() {
   const [edges, setEdges] = useAtom(edgesAtom);
   const [tables] = useAtom(tablesAtom);
+  const [code, setCode] = useAtom(mirolangAtom);
 
   const connectEdge = useCallback(
     (params: Edge | Connection) => {
       const relationship: Relationship = {
         source: {
           tableName: params.source!,
-          columnName: params.sourceHandle?.split('-')[0] || '',
+          columnName: params.sourceHandle ?? '',
         },
         target: {
           tableName: params.target!,
-          columnName: params.targetHandle?.split('-')[0] || '',
+          columnName: params.targetHandle ?? '',
         },
       };
 
@@ -45,6 +48,31 @@ export function useEdgesAtom() {
       );
     },
     [setEdges, tables],
+  );
+
+  const onDragConnect = useCallback(
+    (params: Edge | Connection) => {
+      console.log('onDragConnect');
+      const relationship: Relationship = {
+        source: {
+          tableName: params.source!,
+          columnName: params.sourceHandle ?? '',
+        },
+        target: {
+          tableName: params.target!,
+          columnName: params.targetHandle ?? '',
+        },
+      };
+
+      if (!isValidRelationship({ relationship, tables })) return;
+
+      const mirolang = new MiroLang(code);
+
+      const updatedWithRelationship = mirolang.addRelationship(relationship);
+
+      setCode(prev => updatedWithRelationship ?? prev);
+    },
+    [tables, setCode, code],
   );
 
   const removeEdge = useCallback(
@@ -64,7 +92,6 @@ export function useEdgesAtom() {
   useEffect(() => {
     console.log('use-edges-atom.ts');
     console.log('edges', edges);
-    console.log('tables', tables);
   }, [edges, tables]);
 
   return {
@@ -73,5 +100,6 @@ export function useEdgesAtom() {
     connectEdge,
     removeEdge,
     onEdgesChange,
+    onDragConnect,
   };
 }

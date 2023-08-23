@@ -106,9 +106,13 @@ export function getTablesChanges({
     }
   }
 
-  // Detect removed tables
+  // get the deleted tables
   for (const oldTable of oldTableArray) {
-    if (!tableMap.has(oldTable.name)) {
+    const stillExists = newTableArray.find(
+      newTable => newTable.name === oldTable.name,
+    );
+
+    if (!stillExists) {
       removedTables.push(oldTable);
     }
   }
