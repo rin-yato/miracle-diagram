@@ -1,12 +1,14 @@
 import { Relationship, Table, relationshipSchema } from '@/lib/table';
-import { SyntaxNode } from '@lezer/common';
+import { SyntaxNode, Tree } from '@lezer/common';
 import { parser } from './grammar/miro';
 
 export class MiroLang {
   private miroLang: string;
+  private tree: Tree;
 
   constructor(miroLang: string) {
     this.miroLang = miroLang;
+    this.tree = parser.parse(this.miroLang);
   }
 
   private nodeToString(node: SyntaxNode | undefined): string {
@@ -15,10 +17,9 @@ export class MiroLang {
   }
 
   parse(): Array<Table> {
-    const tree = parser.parse(this.miroLang);
     const tables: Array<Table> = [];
 
-    tree
+    this.tree
       .resolveInner(0)
       .getChildren('Table')
       .forEach(tableNode => {
@@ -65,5 +66,48 @@ export class MiroLang {
       });
 
     return tables;
+  }
+
+  addRelationship(relationship: Relationship) {
+    const tableNode = this.tree
+      .resolveInner(0)
+      .getChildren('Table')
+      .find(tableNode => {
+        return (
+          this.nodeToString(tableNode.firstChild!) ===
+          relationship.source.tableName
+        );
+      });
+
+    if (!tableNode) return;
+
+    const columnNode = tableNode.getChildren('Column').find(columnNode => {
+      return (
+        this.nodeToString(columnNode.firstChild!) ===
+        relationship.source.columnName
+      );
+    });
+
+    if (!columnNode) return;
+
+    const relationshipNode = columnNode.getChild('Relationship');
+
+    if (!relationshipNode) {
+      const relationshipCode = ` -> ${relationship.target.tableName}.${relationship.target.columnName}`;
+      const updatedColumnCode =
+        this.miroLang.slice(0, columnNode.to) +
+        relationshipCode +
+        this.miroLang.slice(columnNode.to);
+
+      return updatedColumnCode;
+    } else {
+      const updatedRelationshipCode = `-> ${relationship.target.tableName}.${relationship.target.columnName}`;
+      const updatedColumnCode =
+        this.miroLang.slice(0, relationshipNode.from) +
+        updatedRelationshipCode +
+        this.miroLang.slice(relationshipNode.to);
+
+      return updatedColumnCode;
+    }
   }
 }

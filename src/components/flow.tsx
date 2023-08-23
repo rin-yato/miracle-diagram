@@ -1,7 +1,7 @@
 'use client';
 
 import 'reactflow/dist/style.css';
-import React, { useCallback, MouseEvent, useMemo } from 'react';
+import React, { useCallback, MouseEvent } from 'react';
 import ReactFlow, {
   Background,
   BackgroundVariant,
@@ -26,7 +26,7 @@ const nodeTypes = {
 
 export function Flow() {
   const { nodes, onNodesChange } = useNodesAtom();
-  const { edges, onEdgesChange, connectEdge, setEdges } = useEdgesAtom();
+  const { edges, onEdgesChange, setEdges, onDragConnect } = useEdgesAtom();
 
   const onEdgeMouseEnter = useCallback(
     (event: MouseEvent, edge: Edge) => {
@@ -67,7 +67,7 @@ export function Flow() {
       edges={edges}
       edgeTypes={edgeTypes}
       nodeTypes={nodeTypes}
-      onConnect={connectEdge}
+      onConnect={onDragConnect}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onEdgeMouseEnter={onEdgeMouseEnter}
