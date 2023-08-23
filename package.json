@@ -33,6 +33,7 @@
     "jotai": "^2.3.1",
     "lodash": "^4.17.21",
     "lucide-react": "0.266.0-beta.0",
+    "million": "2.6.0-beta.2",
     "next": "13.4.12",
     "next-themes": "^0.2.1",
     "react": "18.2.0",
