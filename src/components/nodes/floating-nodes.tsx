@@ -21,14 +21,13 @@ export const FloatingNode = memo((props: NodeProps) => {
             >
               <Handle
                 type="source"
-                id={column.name}
+                id={column.name + '-right'}
                 position={Position.Right}
                 className="top-1/2 -translate-y-1/2"
-
               />
               <Handle
                 type="source"
-                id={column.name}
+                id={column.name + '-left'}
                 position={Position.Left}
                 className="top-1/2 -translate-y-1/2"
               />

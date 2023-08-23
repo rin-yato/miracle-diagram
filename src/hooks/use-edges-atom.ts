@@ -28,11 +28,11 @@ export function useEdgesAtom() {
       const relationship: Relationship = {
         source: {
           tableName: params.source!,
-          columnName: params.sourceHandle ?? '',
+          columnName: params.sourceHandle?.split('-')[0] ?? '',
         },
         target: {
           tableName: params.target!,
-          columnName: params.targetHandle ?? '',
+          columnName: params.targetHandle?.split('-')[0] ?? '',
         },
       };
 
@@ -56,11 +56,11 @@ export function useEdgesAtom() {
       const relationship: Relationship = {
         source: {
           tableName: params.source!,
-          columnName: params.sourceHandle ?? '',
+          columnName: params.sourceHandle?.split('-')[0] ?? '',
         },
         target: {
           tableName: params.target!,
-          columnName: params.targetHandle ?? '',
+          columnName: params.targetHandle?.split('-')[0] ?? '',
         },
       };
 

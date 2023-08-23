@@ -14,14 +14,21 @@ function getParams(nodeA: Node, nodeB: Node, handleId: string) {
   const verticalDiff = Math.abs(centerA.y - centerB.y);
 
   let position: Position;
+  let updatedHandleId: string = handleId.split('-')[0];
 
   if (horizontalDiff > verticalDiff) {
     position = centerA.x > centerB.x ? Position.Left : Position.Right;
+    updatedHandleId += centerA.x > centerB.x ? '-left' : '-right';
   } else {
     position = centerA.x > centerB.x ? Position.Left : Position.Right;
+    updatedHandleId += centerA.x > centerB.x ? '-left' : '-right';
   }
 
-  const coordinates = getHandleCoordsByPosition(nodeA, position, handleId);
+  const coordinates = getHandleCoordsByPosition(
+    nodeA,
+    position,
+    updatedHandleId,
+  );
 
   if (!coordinates) return [0, 0, position];
 
