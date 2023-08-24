@@ -1,7 +1,8 @@
 import React from 'react';
-import { Icons } from './icons';
-import Text from './ui/text';
-import { ThemeToggle } from './theme/toggle';
+import { Icons } from '../icons';
+import Text from '../ui/text';
+import { ThemeToggle } from '../theme/toggle';
+import { AppHeaderSettings } from './settings';
 
 export function AppHeader() {
   return (
@@ -19,6 +20,7 @@ export function AppHeader() {
       </div>
       <div className="flex gap-3">
         <ThemeToggle />
+        <AppHeaderSettings />
       </div>
     </div>
   );
