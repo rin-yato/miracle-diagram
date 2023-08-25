@@ -22,6 +22,7 @@ export const columnSchema = z.object({
 
 export const tableSchema = z.object({
   name: z.string(),
+  icon: z.string().optional(),
   columns: z.array(columnSchema),
 });
 

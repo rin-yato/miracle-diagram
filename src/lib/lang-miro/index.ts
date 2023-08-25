@@ -17,6 +17,7 @@ import {
 } from '@codemirror/autocomplete';
 import { MiroHighlighting, MiroStyleTags } from './highlight';
 import { linter, Diagnostic } from '@codemirror/lint';
+import { allIconNames } from '@/components/icons';
 
 let parserWithMetadata = parser.configure({
   props: [
@@ -50,6 +51,13 @@ export const miroDefaultCompletion = completeFromList([
   { label: 'float', type: 'keyword' },
   { label: 'date', type: 'keyword' },
 ]);
+
+export const iconCompletion = completeFromList(
+  allIconNames.map(icon => ({
+    label: `i-${icon}`,
+    type: 'icon',
+  })),
+);
 
 const miroTypeCompletion = (
   context: CompletionContext,
@@ -103,7 +111,7 @@ export function miro() {
     MiroHighlighting,
     MiroLinter,
     autocompletion({
-      override: [miroTypeCompletion, completeAnyWord],
+      override: [miroTypeCompletion, completeAnyWord, iconCompletion],
     }),
   ]);
 }

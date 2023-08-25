@@ -1,18 +1,30 @@
 @top Database { Table }
 
-Table { TableName "{" commaSep<Column>? "}" }
+Table { 
+  TableName Icon?
+  "{" commaSep<Column>? "}"
+}
 
-Column { ColumnName ColumnType list<Constraint>? Relationship? }
+Icon { "i-" IconName }
+
+Column { 
+  ColumnName 
+  ColumnType 
+  list<Constraint>? 
+  Relationship? 
+}
 
 Relationship { "->" TableName "." ColumnName }
 
 @tokens {
-  TableName { Identifier }
-  ColumnName { Identifier }
+  TableName { Name }
+  ColumnName { Name }
   ColumnType { Identifier }
   Constraint { Identifier }
   space { $[\r\t\n ] }
-  Identifier { $[A-Za-z_]+ }
+  Identifier { $[\[A-Za-z_?\]]+ }
+  Name { $[A-Za-z_]+ }
+  IconName { $[\[A-Za-z_?\-\]]+ }
   "{" "}"
 }
 

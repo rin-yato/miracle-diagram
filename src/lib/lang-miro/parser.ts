@@ -11,7 +11,7 @@ export class MiroLang {
     this.tree = parser.parse(this.miroLang);
   }
 
-  private nodeToString(node: SyntaxNode | undefined): string {
+  private nodeToString(node: SyntaxNode | undefined | null): string {
     if (!node) return '';
     return this.miroLang.slice(node.from, node.to);
   }
@@ -24,6 +24,10 @@ export class MiroLang {
       .getChildren('Table')
       .forEach(tableNode => {
         const tableName = this.nodeToString(tableNode.firstChild!);
+
+        const icon = this.nodeToString(
+          tableNode.firstChild?.nextSibling,
+        ).substring(2);
 
         const columns = tableNode.getChildren('Column').map(columnNode => {
           const columnName = this.nodeToString(columnNode.firstChild!);
@@ -61,6 +65,7 @@ export class MiroLang {
 
         tables.push({
           name: tableName,
+          icon,
           columns,
         });
       });

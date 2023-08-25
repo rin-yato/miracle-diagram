@@ -3,8 +3,10 @@ export const
   Database = 1,
   Table = 3,
   TableName = 4,
-  Column = 6,
-  ColumnName = 7,
-  ColumnType = 8,
-  Constraint = 9,
-  Relationship = 10
+  Icon = 5,
+  IconName = 6,
+  Column = 8,
+  ColumnName = 9,
+  ColumnType = 10,
+  Constraint = 11,
+  Relationship = 12

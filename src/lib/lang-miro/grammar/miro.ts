@@ -3,16 +3,16 @@ import {LRParser} from "@lezer/lr"
 import {MiroStyleTags} from "../highlight"
 export const parser = LRParser.deserialize({
   version: 14,
-  states: "$[OVQPOOO[QPO'#C_QOQPOOOaQQO,58yOiQSO'#CbOnQPO'#ClOOQO1G.e1G.eOvQPO1G.eO{QWO,58|O!ZQQO'#ChO!fQPO,59WOOQO7+$P7+$PO!nQWO'#CmO!|QPO'#CfOOQO1G.h1G.hO#RQPO1G.hOOQO,59S,59SOOQO-E6f-E6fOOQO'#Cg'#CgO#^QWO,59XO#lQPO,59QOOQO7+$S7+$SOOQO-E6e-E6eO#qQQO1G.lOOQO7+$W7+$W",
-  stateData: "#v~O_OS~OSPO~OTRO~OQUOVSO~OWWO~OdXOQ`X~OQZO~OX[Ob]OQUadUa~OVSOQ[Xd[X~OdXOQ`a~OXbOQaXbaXdaX~OSdO~Ob]OQUidUi~OXbOQaabaadaa~OcgO~OVhO~O",
-  goto: "!UbPPPcPPfPPPlrxPPP!O!RRQOQTRR`XQ^WRe_Qc[RfcQYTRaYRVRR_W",
-  nodeNames: "⚠ Database } Table TableName { Column ColumnName ColumnType Constraint Relationship",
-  maxTerm: 20,
+  states: "%QOVQPOOO[QQO'#C_QOQPOOOdQSO'#CaOiQWO,58yOqQPO,58yOOQO,58{,58{OvQ`O'#CdO{QPO'#CoOOQO1G.e1G.eO!TQPO1G.eO!YQWO1G.eO!bQpO,59OO!pQWO'#CjO!{QPO,59ZOOQO7+$P7+$PO#TQPO7+$PO#YQpO'#CpO#hQPO'#ChOOQO1G.j1G.jO#mQPO1G.jOOQO,59U,59UOOQO-E6h-E6hOOQO<<Gk<<GkOOQO'#Ci'#CiO#xQpO,59[O$WQPO,59SOOQO7+$U7+$UOOQO-E6g-E6gO$]QWO1G.nOOQO7+$Y7+$Y",
+  stateData: "$b~OaOS~OSPO~OVSObRO~OUUO~OQXOXVO~OVZO~OY[O~Og]OQcX~OQ_O~OQ_OXVO~OZaOebOQWagWa~OXVOQ^Xg^X~Og]OQca~OQgO~OZhOQdXedXgdX~OSjO~OebOQWigWi~OZhOQdaedagda~OfmO~OXnO~O",
+  goto: "!`ePPPfPiPPlPPPsy!PPPPP!V!]RQORTPSWSZRe]Qc[RkdQiaRliQ^WRf^QYSR`ZRd[",
+  nodeNames: "⚠ Database } Table TableName Icon IconName { Column ColumnName ColumnType Constraint Relationship",
+  maxTerm: 23,
   propSources: [MiroStyleTags],
   skippedNodes: [0],
   repeatNodeCount: 2,
-  tokenData: "#R~R[XYwYZw]^wpqw|}|}!O!R!O!P!^!c!}!c#R#S!c#T#o!c#o#p!w#q#r!|~|O_~~!ROd~~!UP!`!a!X~!^Ob~~!cOc~_!nRVQWSXWSP!c!}!c#R#S!c#T#o!c~!|OT~~#ROQ~",
-  tokenizers: [0, 1, 2, 3],
+  tokenData: "&s~RaXY!WYZ!W]^!Wpq!W|}!]}!O!b!O!P#p!a!b#u!c!}$e!}#O#u#P#Q#u#R#S$e#T#]$e#]#^%X#^#o$e#o#p&i#q#r&n~!]Oa~~!bOg~u!gWUS}!O#P!`!a#k!a!b#P!c!}#P!}#O#P#P#Q#P#R#S#P#T#o#PS#UVUS}!O#P!a!b#P!c!}#P!}#O#P#P#Q#P#R#S#P#T#o#Pq#pOeq~#uOf~!U$OVY`ZpUS}!O#P!a!b#u!c!}#u!}#O#u#P#Q#u#R#S#u#T#o#u!_$rVXWY`ZpUSSP}!O#P!a!b#u!c!}$e!}#O#u#P#Q#u#R#S$e#T#o$e!a%fVXWY`ZpUSSP}!O%{!a!b#u!c!}$e!}#O#u#P#Q#u#R#S$e#T#o$eU&SVbQUS}!O#P!a!b#P!c!}#P!}#O#P#P#Q#P#R#S#P#T#o#P~&nOV~~&sOQ~",
+  tokenizers: [0, 1, 2, 3, 4, 5],
   topRules: {"Database":[0,1]},
   tokenPrec: 0
 })

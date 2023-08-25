@@ -33,6 +33,9 @@ import {
   FileOutput,
   X,
 } from 'lucide-react';
+import dynamic from 'next/dynamic';
+import dynamicIconImport from 'lucide-react/dynamicIconImports';
+import React from 'react';
 
 export type Icon = keyof typeof Icons;
 
@@ -138,3 +141,26 @@ export function DynamicIcon(props: DynamicIconProps) {
   const Icon = Icons[icon];
   return <Icon {...rest} />;
 }
+
+interface LooseIconProps extends LucideProps {
+  icon: keyof typeof dynamicIconImport | undefined | null;
+}
+
+export const allIconNames = Object.keys(dynamicIconImport);
+
+export function isValidIconName(
+  icon: string | null | undefined,
+): icon is keyof typeof dynamicIconImport {
+  if (!icon) return false;
+  return allIconNames.includes(icon);
+}
+
+function LooseIconRaw({ icon, ...props }: LooseIconProps) {
+  if (!icon) return null;
+
+  const LucideIcon = dynamic(dynamicIconImport[icon]);
+
+  return <LucideIcon {...props} />;
+}
+
+export const LooseIcon = React.memo(LooseIconRaw);
