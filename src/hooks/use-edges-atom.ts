@@ -78,8 +78,15 @@ export function useEdgesAtom() {
   const removeEdge = useCallback(
     (edgeId: string) => {
       setEdges(prev => prev.filter(edge => edge.id !== edgeId));
+
+      const mirolang = new MiroLang(code);
+
+      const updatedWithoutRelationship = mirolang.removeRelationship(edgeId);
+
+      setCode(prev => updatedWithoutRelationship ?? prev);
+
     },
-    [setEdges],
+    [setEdges, setCode, code],
   );
 
   const onEdgesChange = useCallback(
