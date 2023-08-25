@@ -2,16 +2,22 @@ import { tableSchema } from '@/lib/table';
 import React, { memo } from 'react';
 import { Handle, NodeProps, Position } from 'reactflow';
 import { Separator } from '../ui/separator';
+import { LooseIcon, isValidIconName } from '../icons';
 
 export const FloatingNode = memo((props: NodeProps) => {
   const table = tableSchema.safeParse(props.data);
 
   if (!table.success) return null;
 
+  const icon = isValidIconName(table.data.icon) ? table.data.icon : null;
+
   return (
     <React.Fragment>
       <div className="bg-secondary py-2 flex flex-col border rounded-lg">
-        <h3 className="font-semibold px-4">{table.data.name}</h3>
+        <span className="flex justify-between items-center px-4">
+          <h3 className="font-semibold">{table.data.name}</h3>
+          <LooseIcon icon={icon} size={16} />
+        </span>
         <Separator className="my-2" />
         <ul>
           {table.data.columns.map(column => (
