@@ -69,6 +69,23 @@ export function generateRelationshipId(relationship: Relationship): string {
   return `${relationship.source.tableName}_${relationship.source.columnName}-${relationship.target.tableName}_${relationship.target.columnName}`;
 }
 
+export function getRelationshipFromEdgeId(edgeId: string): Relationship {
+  const [source, target] = edgeId.split('-');
+  const [sourceTable, sourceColumn] = source.split('_');
+  const [targetTable, targetColumn] = target.split('_');
+
+  return {
+    source: {
+      tableName: sourceTable,
+      columnName: sourceColumn,
+    },
+    target: {
+      tableName: targetTable,
+      columnName: targetColumn,
+    },
+  };
+}
+
 /**
  * Represents changes in tables.
  */

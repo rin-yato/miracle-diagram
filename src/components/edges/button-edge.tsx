@@ -3,7 +3,7 @@ import {
   BaseEdge,
   EdgeLabelRenderer,
   EdgeProps,
-  getBezierPath,
+  getSmoothStepPath,
   useStore,
 } from 'reactflow';
 import { Button } from '../ui/button';
@@ -17,12 +17,6 @@ export function ButtonEdgeRaw({
   style = {},
   source,
   target,
-  sourceX,
-  sourceY,
-  sourcePosition,
-  targetX,
-  targetY,
-  targetPosition,
   sourceHandleId,
   targetHandleId,
   markerEnd,
@@ -37,6 +31,10 @@ export function ButtonEdgeRaw({
 
   const { removeEdge } = useEdgesAtom();
 
+  const handleRemoveEdge = useCallback(() => {
+    removeEdge(id);
+  }, [id, removeEdge]);
+
   if (!sourceNode || !targetNode) return null;
 
   const { sx, sy, tx, ty, sourcePos, targetPos } = getEdgeParams(
@@ -48,7 +46,7 @@ export function ButtonEdgeRaw({
     },
   );
 
-  const [edgePath, labelX, labelY] = getBezierPath({
+  const [edgePath, labelX, labelY] = getSmoothStepPath({
     sourceX: sx,
     sourceY: sy,
     sourcePosition: sourcePos,
@@ -80,7 +78,7 @@ export function ButtonEdgeRaw({
               size="icon"
               variant="outline"
               className="w-6 h-6 rounded-full"
-              onClick={event => removeEdge(id)}
+              onClick={handleRemoveEdge}
             >
               <Icons.X className="w-4 h-4" />
             </Button>

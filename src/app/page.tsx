@@ -3,7 +3,6 @@
 import { CodeEditor } from '@/components/code-editor';
 import { Flow } from '@/components/flow';
 import { Sash } from '@/components/sash';
-import { Metadata } from 'next';
 import { useState } from 'react';
 import SplitPane from 'split-pane-react';
 import 'split-pane-react/esm/themes/default.css';
