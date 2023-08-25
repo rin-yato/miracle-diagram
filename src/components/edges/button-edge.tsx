@@ -17,12 +17,6 @@ export function ButtonEdgeRaw({
   style = {},
   source,
   target,
-  sourceX,
-  sourceY,
-  sourcePosition,
-  targetX,
-  targetY,
-  targetPosition,
   sourceHandleId,
   targetHandleId,
   markerEnd,
@@ -36,6 +30,10 @@ export function ButtonEdgeRaw({
   );
 
   const { removeEdge } = useEdgesAtom();
+
+  const handleRemoveEdge = useCallback(() => {
+    removeEdge(id);
+  }, [id, removeEdge]);
 
   if (!sourceNode || !targetNode) return null;
 
@@ -80,7 +78,7 @@ export function ButtonEdgeRaw({
               size="icon"
               variant="outline"
               className="w-6 h-6 rounded-full"
-              onClick={event => removeEdge(id)}
+              onClick={handleRemoveEdge}
             >
               <Icons.X className="w-4 h-4" />
             </Button>
