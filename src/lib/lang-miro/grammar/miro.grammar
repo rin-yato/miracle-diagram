@@ -24,7 +24,7 @@ Relationship { "->" TableName "." ColumnName }
   space { $[\r\t\n ] }
   Identifier { $[\[A-Za-z_?\]]+ }
   Name { $[A-Za-z_]+ }
-  IconName { $[\[A-Za-z_?\-\]]+ }
+  IconName { $[\[A-Za-z0-9_?\-\]]+ }
   "{" "}"
 }
 

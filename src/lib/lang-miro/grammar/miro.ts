@@ -11,7 +11,7 @@ export const parser = LRParser.deserialize({
   propSources: [MiroStyleTags],
   skippedNodes: [0],
   repeatNodeCount: 2,
-  tokenData: "&s~RaXY!WYZ!W]^!Wpq!W|}!]}!O!b!O!P#p!a!b#u!c!}$e!}#O#u#P#Q#u#R#S$e#T#]$e#]#^%X#^#o$e#o#p&i#q#r&n~!]Oa~~!bOg~u!gWUS}!O#P!`!a#k!a!b#P!c!}#P!}#O#P#P#Q#P#R#S#P#T#o#PS#UVUS}!O#P!a!b#P!c!}#P!}#O#P#P#Q#P#R#S#P#T#o#Pq#pOeq~#uOf~!U$OVY`ZpUS}!O#P!a!b#u!c!}#u!}#O#u#P#Q#u#R#S#u#T#o#u!_$rVXWY`ZpUSSP}!O#P!a!b#u!c!}$e!}#O#u#P#Q#u#R#S$e#T#o$e!a%fVXWY`ZpUSSP}!O%{!a!b#u!c!}$e!}#O#u#P#Q#u#R#S$e#T#o$eU&SVbQUS}!O#P!a!b#P!c!}#P!}#O#P#P#Q#P#R#S#P#T#o#P~&nOV~~&sOQ~",
+  tokenData: "'Y~RbXY!ZYZ!Z]^!Zpq!Z|}!`}!O!e!O!P#y!Q![#V!a!b$O!c!}$q!}#O$O#P#Q$O#R#S$q#T#]$q#]#^%h#^#o$q#o#p'O#q#r'T~!`Oa~~!eOg~u!jXUS}!O#V!Q![#V!`!a#t!a!b#V!c!}#V!}#O#V#P#Q#V#R#S#V#T#o#VS#[WUS}!O#V!Q![#V!a!b#V!c!}#V!}#O#V#P#Q#V#R#S#V#T#o#Vq#yOeq~$OOf~!U$XWY`ZpUS}!O#V!Q![#V!a!b$O!c!}$O!}#O$O#P#Q$O#R#S$O#T#o$O!_%OWXWY`ZpUSSP}!O#V!Q![#V!a!b$O!c!}$q!}#O$O#P#Q$O#R#S$q#T#o$q!a%uWXWY`ZpUSSP}!O&_!Q![#V!a!b$O!c!}$q!}#O$O#P#Q$O#R#S$q#T#o$qU&fWbQUS}!O#V!Q![#V!a!b#V!c!}#V!}#O#V#P#Q#V#R#S#V#T#o#V~'TOV~~'YOQ~",
   tokenizers: [0, 1, 2, 3, 4, 5],
   topRules: {"Database":[0,1]},
   tokenPrec: 0
