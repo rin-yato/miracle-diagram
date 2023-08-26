@@ -17,7 +17,7 @@ import {
 } from '@codemirror/autocomplete';
 import { MiroHighlighting, MiroStyleTags } from './highlight';
 import { linter, Diagnostic } from '@codemirror/lint';
-import { allIconNames } from '@/components/icons';
+import { LooseIcon, allIconNames } from '@/components/icons';
 
 let parserWithMetadata = parser.configure({
   props: [
@@ -44,12 +44,12 @@ export const miroLanguage = LRLanguage.define({
 });
 
 export const miroDefaultCompletion = completeFromList([
-  { label: 'string', type: 'keyword' },
-  { label: 'number', type: 'keyword' },
-  { label: 'boolean', type: 'keyword' },
-  { label: 'int', type: 'keyword' },
-  { label: 'float', type: 'keyword' },
-  { label: 'date', type: 'keyword' },
+  { label: 'string', type: 'type' },
+  { label: 'number', type: 'type' },
+  { label: 'boolean', type: 'type' },
+  { label: 'int', type: 'type' },
+  { label: 'float', type: 'type' },
+  { label: 'date', type: 'type' },
 ]);
 
 export const iconCompletion = completeFromList(
