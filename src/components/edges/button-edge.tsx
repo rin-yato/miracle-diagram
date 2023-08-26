@@ -8,8 +8,8 @@ import {
 } from 'reactflow';
 import { Button } from '../ui/button';
 import { Icons } from '../icons';
-import { useEdgesAtom } from '@/hooks/use-edges-atom';
 import { getEdgeParams } from '@/lib/floating';
+import { useProject } from '@/hooks/use-project';
 
 export function ButtonEdgeRaw({
   id,
@@ -29,7 +29,7 @@ export function ButtonEdgeRaw({
     useCallback(store => store.nodeInternals.get(target), [target]),
   );
 
-  const { removeEdge } = useEdgesAtom();
+  const { removeEdge } = useProject();
 
   const handleRemoveEdge = useCallback(() => {
     removeEdge(id);

@@ -12,7 +12,7 @@ import {
 import { Icons } from '../icons';
 import { useImportExport } from '@/hooks/use-import-export';
 
-export function AppHeaderSettings() {
+export function ImportExport() {
   const { exportToJson, importFromJson } = useImportExport();
 
   return (
