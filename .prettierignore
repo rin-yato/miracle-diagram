@@ -1,0 +1,6 @@
+node_modules
+public
+.vercel
+.next
+.deepsource.toml
+.pnpm-lock.yaml
