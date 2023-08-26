@@ -1,7 +1,7 @@
 import { nodesAtom } from '@/jotai/nodes-atom';
 import { Table } from '@/lib/table';
 import { useAtom } from 'jotai';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Node, NodeChange, applyNodeChanges } from 'reactflow';
 
 export function useNodesAtom() {
@@ -45,6 +45,10 @@ export function useNodesAtom() {
     },
     [nodes, setNodes],
   );
+
+  useEffect(() => {
+    console.log('use-nodes-atom.ts');
+  }, [nodes]);
 
   return {
     nodes,

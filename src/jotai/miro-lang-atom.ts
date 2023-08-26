@@ -1,4 +1,5 @@
 import { atom } from 'jotai';
+import { projectAtom } from './project-atom';
 
 const initialCode = `
 users {

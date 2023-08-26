@@ -12,6 +12,10 @@ export function useMirolang(options = { leading: false, ms: 275 }) {
 
   useEffect(() => clearTimeout, []);
 
+  useEffect(() => {
+    console.log('use-mirolang.ts');
+  }, [code]);
+
   const debouncedSetValue = (newValue: string) => {
     clearTimeout();
     if (leadingRef.current && options.leading) {
