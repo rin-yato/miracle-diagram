@@ -38,8 +38,8 @@ export function useProject() {
       .get(currentProject)
       .then(found => {
         if (found) {
-          setCode(found.code);
           setProjectRaw(found);
+          setCode(found.code);
         } else {
           setProjectRaw({
             id: 'example',

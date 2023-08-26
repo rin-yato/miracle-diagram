@@ -10,7 +10,6 @@ import ReactFlow, {
   Edge,
 } from 'reactflow';
 import { ButtonEdge } from './edges/button-edge';
-import { CustomDefaultNode } from './nodes/custom-default';
 import { FloatingNode } from './nodes/floating-nodes';
 import { useProject } from '@/hooks/use-project';
 
@@ -19,7 +18,6 @@ const edgeTypes = {
 };
 
 const nodeTypes = {
-  'custom-default': CustomDefaultNode,
   'floating-node': FloatingNode,
 };
 
