@@ -1,4 +1,9 @@
-import { Relationship, Table, relationshipSchema } from '@/lib/table';
+import {
+  Relationship,
+  Table,
+  getRelationshipFromEdgeId,
+  relationshipSchema,
+} from '@/lib/table';
 import { SyntaxNode, Tree } from '@lezer/common';
 import { parser } from './grammar/miro';
 
@@ -114,5 +119,40 @@ export class MiroLang {
 
       return updatedColumnCode;
     }
+  }
+
+  removeRelationship(edgeId: string) {
+    const relationship = getRelationshipFromEdgeId(edgeId);
+
+    const tableNode = this.tree
+      .resolveInner(0)
+      .getChildren('Table')
+      .find(tableNode => {
+        return (
+          this.nodeToString(tableNode.firstChild!) ===
+          relationship.source.tableName
+        );
+      });
+
+    if (!tableNode) return;
+
+    const columnNode = tableNode.getChildren('Column').find(columnNode => {
+      return (
+        this.nodeToString(columnNode.firstChild!) ===
+        relationship.source.columnName
+      );
+    });
+
+    if (!columnNode) return;
+
+    const relationshipNode = columnNode.getChild('Relationship');
+
+    if (!relationshipNode) return;
+
+    const updatedColumnCode =
+      this.miroLang.slice(0, relationshipNode.from) +
+      this.miroLang.slice(relationshipNode.to);
+
+    return updatedColumnCode;
   }
 }

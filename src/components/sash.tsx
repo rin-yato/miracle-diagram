@@ -1,4 +1,4 @@
-export function Sash(index: number, active: boolean) {
+export function Sash(index: number) {
   return (
     <div
       key={index + '-sash'}

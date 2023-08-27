@@ -1,7 +1,7 @@
 'use client';
 
 import 'reactflow/dist/style.css';
-import React, { useCallback, MouseEvent } from 'react';
+import React, { useCallback, MouseEvent, useEffect } from 'react';
 import ReactFlow, {
   Background,
   BackgroundVariant,
@@ -10,28 +10,25 @@ import ReactFlow, {
   Edge,
 } from 'reactflow';
 import { ButtonEdge } from './edges/button-edge';
-import { useNodesAtom } from '@/hooks/use-nodes-atom';
-import { useEdgesAtom } from '@/hooks/use-edges-atom';
-import { CustomDefaultNode } from './nodes/custom-default';
 import { FloatingNode } from './nodes/floating-nodes';
+import { useProject } from '@/hooks/use-project';
 
 const edgeTypes = {
   'button-edge': ButtonEdge,
 };
 
 const nodeTypes = {
-  'custom-default': CustomDefaultNode,
   'floating-node': FloatingNode,
 };
 
 export function Flow() {
-  const { nodes, onNodesChange } = useNodesAtom();
-  const { edges, onEdgesChange, setEdges, onDragConnect } = useEdgesAtom();
+  const { project, onDragConnect, onEdgesChange, onNodesChange, setProject } =
+    useProject();
 
   const onEdgeMouseEnter = useCallback(
     (event: MouseEvent, edge: Edge) => {
       // show the label on mouse enter
-      setEdges(es =>
+      setProject('edges', es =>
         es.map(e => {
           if (e.id === edge.id) {
             e.label = 'x';
@@ -40,14 +37,14 @@ export function Flow() {
         }),
       );
     },
-    [setEdges],
+    [setProject],
   );
 
   const onEdgeMouseLeave = useCallback(
     (event: MouseEvent, edge: Edge) => {
       // hide the label on mouse leave
       setTimeout(() => {
-        setEdges(es =>
+        setProject('edges', es =>
           es.map(e => {
             if (e.id === edge.id) {
               e.label = undefined;
@@ -57,14 +54,14 @@ export function Flow() {
         );
       }, 1250);
     },
-    [setEdges],
+    [setProject],
   );
 
   return (
     <ReactFlow
       fitView
-      nodes={nodes}
-      edges={edges}
+      nodes={project?.nodes}
+      edges={project?.edges}
       edgeTypes={edgeTypes}
       nodeTypes={nodeTypes}
       onConnect={onDragConnect}

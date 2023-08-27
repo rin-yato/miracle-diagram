@@ -5,19 +5,30 @@ import {
   foldInside,
   foldNodeProp,
   indentNodeProp,
+  indentUnit,
   syntaxTree,
 } from '@codemirror/language';
 import { parser } from './grammar/miro';
 import {
+  acceptCompletion,
   autocompletion,
-  completeFromList,
-  completeAnyWord,
-  CompletionContext,
-  CompletionResult,
+  completionStatus,
+  moveCompletionSelection,
+  startCompletion,
 } from '@codemirror/autocomplete';
 import { MiroHighlighting, MiroStyleTags } from './highlight';
 import { linter, Diagnostic } from '@codemirror/lint';
-import { allIconNames } from '@/components/icons';
+import {
+  iconCompletion,
+  miroRelationshipCompletion,
+  miroTypeCompletion,
+} from './completions';
+import { keymap } from '@codemirror/view';
+import {
+  defaultKeymap,
+  insertNewlineAndIndent,
+  insertTab,
+} from '@codemirror/commands';
 
 let parserWithMetadata = parser.configure({
   props: [
@@ -43,46 +54,7 @@ export const miroLanguage = LRLanguage.define({
   parser: parserWithMetadata,
 });
 
-export const miroDefaultCompletion = completeFromList([
-  { label: 'string', type: 'keyword' },
-  { label: 'number', type: 'keyword' },
-  { label: 'boolean', type: 'keyword' },
-  { label: 'int', type: 'keyword' },
-  { label: 'float', type: 'keyword' },
-  { label: 'date', type: 'keyword' },
-]);
-
-export const iconCompletion = completeFromList(
-  allIconNames.map(icon => ({
-    label: `i-${icon}`,
-    type: 'icon',
-  })),
-);
-
-const miroTypeCompletion = (
-  context: CompletionContext,
-): CompletionResult | null => {
-  // match if there is a word and space
-  const match = context.matchBefore(/\w\s+\w+/);
-
-  if (match) {
-    return {
-      from: context.pos,
-      options: [
-        { label: 'string', type: 'type' },
-        { label: 'number', type: 'type' },
-        { label: 'boolean', type: 'type' },
-        { label: 'int', type: 'type' },
-        { label: 'float', type: 'type' },
-        { label: 'date', type: 'type' },
-      ],
-    };
-  }
-
-  return null;
-};
-
-const MiroLinter = linter(view => {
+export const MiroLinter = linter(view => {
   let diagnostics: Diagnostic[] = [];
   syntaxTree(view.state)
     .cursor()
@@ -93,16 +65,9 @@ const MiroLinter = linter(view => {
           to: node.to,
           severity: 'error',
           message: 'Syntax Error!',
-          actions: [
-            {
-              name: 'Remove',
-              apply(view, from, to) {
-                view.dispatch({ changes: { from, to } });
-              },
-            },
-          ],
         });
     });
+
   return diagnostics;
 });
 
@@ -111,7 +76,44 @@ export function miro() {
     MiroHighlighting,
     MiroLinter,
     autocompletion({
-      override: [miroTypeCompletion, completeAnyWord, iconCompletion],
+      override: [
+        miroTypeCompletion,
+        iconCompletion,
+        miroRelationshipCompletion,
+      ],
     }),
+    keymap.of([
+      {
+        key: 'Tab',
+        preventDefault: true,
+        run: target => {
+          if (completionStatus(target.state) === 'active') {
+            moveCompletionSelection(true)(target);
+          } else {
+            insertTab(target);
+          }
+          return true;
+        },
+      },
+      {
+        key: 'Enter',
+        preventDefault: true,
+        run: target => {
+          if (completionStatus(target.state) === 'active') {
+            acceptCompletion(target);
+          } else {
+            insertNewlineAndIndent(target);
+          }
+          return true;
+        },
+      },
+      {
+        key: 'Ctrl-Space',
+        mac: 'Cmd-i',
+        preventDefault: true,
+        run: startCompletion,
+      },
+      ...defaultKeymap,
+    ]),
   ]);
 }

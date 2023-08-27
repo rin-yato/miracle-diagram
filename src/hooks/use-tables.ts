@@ -1,11 +1,9 @@
 import { tablesAtom } from '@/jotai/table-atom';
 import {
-  Relationship,
   Table,
   extractRelationshipsFromEdges,
   extractRelationshipsFromTables,
   generateRelationshipId,
-  getRelationshipsChanges,
   getTablesChanges,
 } from '@/lib/table';
 import { useAtom } from 'jotai';

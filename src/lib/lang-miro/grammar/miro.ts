@@ -3,15 +3,15 @@ import {LRParser} from "@lezer/lr"
 import {MiroStyleTags} from "../highlight"
 export const parser = LRParser.deserialize({
   version: 14,
-  states: "%QOVQPOOO[QQO'#C_QOQPOOOdQSO'#CaOiQWO,58yOqQPO,58yOOQO,58{,58{OvQ`O'#CdO{QPO'#CoOOQO1G.e1G.eO!TQPO1G.eO!YQWO1G.eO!bQpO,59OO!pQWO'#CjO!{QPO,59ZOOQO7+$P7+$PO#TQPO7+$PO#YQpO'#CpO#hQPO'#ChOOQO1G.j1G.jO#mQPO1G.jOOQO,59U,59UOOQO-E6h-E6hOOQO<<Gk<<GkOOQO'#Ci'#CiO#xQpO,59[O$WQPO,59SOOQO7+$U7+$UOOQO-E6g-E6gO$]QWO1G.nOOQO7+$Y7+$Y",
-  stateData: "$b~OaOS~OSPO~OVSObRO~OUUO~OQXOXVO~OVZO~OY[O~Og]OQcX~OQ_O~OQ_OXVO~OZaOebOQWagWa~OXVOQ^Xg^X~Og]OQca~OQgO~OZhOQdXedXgdX~OSjO~OebOQWigWi~OZhOQdaedagda~OfmO~OXnO~O",
-  goto: "!`ePPPfPiPPlPPPsy!PPPPP!V!]RQORTPSWSZRe]Qc[RkdQiaRliQ^WRf^QYSR`ZRd[",
-  nodeNames: "⚠ Database } Table TableName Icon IconName { Column ColumnName ColumnType Constraint Relationship",
+  states: "%QOVQPOOO[QQO'#C_QOQPOOOdQSO'#CaOiQWO,58yOqQPO,58yOOQO,58{,58{OvQ`O'#CdO{QPO'#CpOOQO1G.e1G.eO!TQPO1G.eO!YQWO1G.eO!bQpO,59OO!pQWO'#CkO!{QPO,59[OOQO7+$P7+$PO#TQPO7+$PO#YQpO'#CqO#hQPO'#ChOOQO1G.j1G.jO#mQPO1G.jOOQO,59V,59VOOQO-E6i-E6iOOQO<<Gk<<GkOOQO'#Cj'#CjO#xQpO,59]O$WQPO,59SOOQO7+$U7+$UOOQO-E6h-E6hO$]QWO1G.nOOQO7+$Y7+$Y",
+  stateData: "$b~ObOS~OSPO~OVSOcRO~OUUO~OQXOXVO~OVZO~OY[O~Og]OQdX~OQ_O~OQ_OXVO~OZaOfbOQWagWa~OXVOQ_Xg_X~Og]OQda~OQgO~OZhOQeXfeXgeX~OSjO~OfbOQWigWi~OZhOQeafeagea~O]mO~OXnO~O",
+  goto: "!afPPPgPjPPmPPPtPz!QPPPP!W!^RQORTPSWSZRe]Qc[RkdQiaRliQ^WRf^QYSR`ZRd[",
+  nodeNames: "⚠ Database } Table TableName Icon IconName { Column ColumnName ColumnType Constraint Relationship .",
   maxTerm: 23,
   propSources: [MiroStyleTags],
   skippedNodes: [0],
   repeatNodeCount: 2,
-  tokenData: "'Y~RbXY!ZYZ!Z]^!Zpq!Z|}!`}!O!e!O!P#y!Q![#V!a!b$O!c!}$q!}#O$O#P#Q$O#R#S$q#T#]$q#]#^%h#^#o$q#o#p'O#q#r'T~!`Oa~~!eOg~u!jXUS}!O#V!Q![#V!`!a#t!a!b#V!c!}#V!}#O#V#P#Q#V#R#S#V#T#o#VS#[WUS}!O#V!Q![#V!a!b#V!c!}#V!}#O#V#P#Q#V#R#S#V#T#o#Vq#yOeq~$OOf~!U$XWY`ZpUS}!O#V!Q![#V!a!b$O!c!}$O!}#O$O#P#Q$O#R#S$O#T#o$O!_%OWXWY`ZpUSSP}!O#V!Q![#V!a!b$O!c!}$q!}#O$O#P#Q$O#R#S$q#T#o$q!a%uWXWY`ZpUSSP}!O&_!Q![#V!a!b$O!c!}$q!}#O$O#P#Q$O#R#S$q#T#o$qU&fWbQUS}!O#V!Q![#V!a!b#V!c!}#V!}#O#V#P#Q#V#R#S#V#T#o#V~'TOV~~'YOQ~",
+  tokenData: "'Y~RbXY!ZYZ!Z]^!Zpq!Z|}!`}!O!e!O!P#y!Q![#V!a!b$O!c!}$q!}#O$O#P#Q$O#R#S$q#T#]$q#]#^%h#^#o$q#o#p'O#q#r'T~!`Ob~~!eOg~u!jXUS}!O#V!Q![#V!`!a#t!a!b#V!c!}#V!}#O#V#P#Q#V#R#S#V#T#o#VS#[WUS}!O#V!Q![#V!a!b#V!c!}#V!}#O#V#P#Q#V#R#S#V#T#o#Vq#yOfq~$OO]~!U$XWY`ZpUS}!O#V!Q![#V!a!b$O!c!}$O!}#O$O#P#Q$O#R#S$O#T#o$O!_%OWXWY`ZpUSSP}!O#V!Q![#V!a!b$O!c!}$q!}#O$O#P#Q$O#R#S$q#T#o$q!a%uWXWY`ZpUSSP}!O&_!Q![#V!a!b$O!c!}$q!}#O$O#P#Q$O#R#S$q#T#o$qU&fWcQUS}!O#V!Q![#V!a!b#V!c!}#V!}#O#V#P#Q#V#R#S#V#T#o#V~'TOV~~'YOQ~",
   tokenizers: [0, 1, 2, 3, 4, 5],
   topRules: {"Database":[0,1]},
   tokenPrec: 0

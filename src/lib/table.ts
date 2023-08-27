@@ -66,7 +66,24 @@ export function extractRelationshipsFromEdges(
 
 export function generateRelationshipId(relationship: Relationship): string {
   console.log('relationship', relationship);
-  return `${relationship.source.tableName}_${relationship.source.columnName}-${relationship.target.tableName}_${relationship.target.columnName}`;
+  return `${relationship.source.tableName}#${relationship.source.columnName}&${relationship.target.tableName}#${relationship.target.columnName}`;
+}
+
+export function getRelationshipFromEdgeId(edgeId: string): Relationship {
+  const [source, target] = edgeId.split('&');
+  const [sourceTable, sourceColumn] = source.split('#');
+  const [targetTable, targetColumn] = target.split('#');
+
+  return {
+    source: {
+      tableName: sourceTable,
+      columnName: sourceColumn,
+    },
+    target: {
+      tableName: targetTable,
+      columnName: targetColumn,
+    },
+  };
 }
 
 /**
@@ -133,22 +150,23 @@ export function getRelationshipsChanges({
   oldRelationships: Relationship[];
   newRelationships: Relationship[];
 }): RelationshipChanges {
-  const relationshipMap = new Map<string, Relationship>();
-
-  // Create a map of old relationships for efficient lookup
-  for (const relationship of oldRelationships) {
-    relationshipMap.set(generateRelationshipId(relationship), relationship);
-  }
-
-  const addedRelationships: Relationship[] = newRelationships.filter(
-    newRelationship => {
-      return !relationshipMap.has(generateRelationshipId(newRelationship));
-    },
+  // get the deleted relationships and added relationships
+  const addedRelationships = newRelationships.filter(
+    newRelationship =>
+      !oldRelationships.find(
+        oldRelationship =>
+          generateRelationshipId(oldRelationship) ===
+          generateRelationshipId(newRelationship),
+      ),
   );
-  const removedRelationships: Relationship[] = oldRelationships.filter(
-    oldRelationship => {
-      return !relationshipMap.has(generateRelationshipId(oldRelationship));
-    },
+
+  const removedRelationships = oldRelationships.filter(
+    oldRelationship =>
+      !newRelationships.find(
+        newRelationship =>
+          generateRelationshipId(oldRelationship) ===
+          generateRelationshipId(newRelationship),
+      ),
   );
 
   return { addedRelationships, removedRelationships };

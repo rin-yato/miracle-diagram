@@ -2,7 +2,8 @@ import React from 'react';
 import { Icons } from '../icons';
 import Text from '../ui/text';
 import { ThemeToggle } from '../theme/toggle';
-import { AppHeaderSettings } from './settings';
+import { ImportExport } from './import-export';
+import { ProjectSelector } from './project-selector';
 
 export function AppHeader() {
   return (
@@ -22,8 +23,9 @@ export function AppHeader() {
         </Text>
       </div>
       <div className="flex gap-3">
+        <ProjectSelector />
+        <ImportExport />
         <ThemeToggle />
-        <AppHeaderSettings />
       </div>
     </div>
   );
