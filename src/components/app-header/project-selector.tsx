@@ -12,7 +12,7 @@ import {
   CommandItem,
   CommandSeparator,
 } from '../ui/command';
-import { CheckIcon, ChevronsUpDown, PlusCircle } from 'lucide-react';
+import { CheckIcon, ChevronsUpDown, PlusCircle, Trash2 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAtom } from 'jotai';
 import { currentProjectAtom } from '@/jotai/project-atom';
@@ -29,14 +29,18 @@ import {
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { db } from '@/lib/db';
+import useConfirmation from '@/hooks/use-confirmation';
+import { toast } from 'react-hot-toast';
 
 export function ProjectSelector() {
-  const { allProjects, setAllProjects } = useAllProjects();
+  const allProjects = useAllProjects();
   const [currentProject, setCurrentProject] = useAtom(currentProjectAtom);
 
   const [open, setOpen] = React.useState(false);
   const [newProjectDialogOpen, setNewProjectDialogOpen] = React.useState(false);
   const [newProjectName, setNewProjectName] = React.useState('');
+
+  const { createConfirmation } = useConfirmation();
 
   const handleNewProjectSubmit = React.useCallback(() => {
     try {
@@ -49,18 +53,43 @@ export function ProjectSelector() {
       });
 
       setCurrentProject(newProjectName);
-      setAllProjects([...allProjects, newProjectName]);
       setNewProjectDialogOpen(false);
+      toast.success(`Project ${newProjectName} has been created.`);
+    } catch (error) {
+      toast.error('Failed to create project.');
+      console.log(error);
+    }
+  }, [setCurrentProject, newProjectName, setNewProjectDialogOpen]);
+
+  const handleDeleteProject = React.useCallback(async () => {
+    if (!allProjects) return;
+
+    if (allProjects?.length < 2) {
+      toast.error(
+        'You only have one project. 🤨',
+      );
+      return;
+    }
+
+    try {
+      await createConfirmation({
+        title: `Are you sure you want to delete ${currentProject} project?`,
+        description: `This is a permanent action, your project will be deleted forever.`,
+        onConfirm: () => {
+          toast.promise(db.projects.delete(currentProject), {
+            loading: 'Deleting project...',
+            success: () => {
+              setCurrentProject(allProjects[0]);
+              return `Project ${currentProject} has been deleted.`;
+            },
+            error: 'Failed to delete project.',
+          });
+        },
+      });
     } catch (error) {
       console.log(error);
     }
-  }, [
-    setCurrentProject,
-    newProjectName,
-    setNewProjectDialogOpen,
-    allProjects,
-    setAllProjects,
-  ]);
+  }, [allProjects, createConfirmation, currentProject, setCurrentProject]);
 
   return (
     <Dialog open={newProjectDialogOpen} onOpenChange={setNewProjectDialogOpen}>
@@ -82,7 +111,7 @@ export function ProjectSelector() {
             <CommandInput placeholder="Search project..." />
             <CommandEmpty>No project found.</CommandEmpty>
             <CommandGroup heading="Projects">
-              {allProjects.map(temProject => (
+              {allProjects?.map(temProject => (
                 <CommandItem
                   key={temProject}
                   onSelect={() => {
@@ -115,6 +144,10 @@ export function ProjectSelector() {
                   Add Project
                 </CommandItem>
               </DialogTrigger>
+              <CommandItem onSelect={handleDeleteProject} isDestructive>
+                <Trash2 className="mr-2 h-4 w-4" />
+                Delete current project
+              </CommandItem>
             </CommandGroup>
           </Command>
         </PopoverContent>

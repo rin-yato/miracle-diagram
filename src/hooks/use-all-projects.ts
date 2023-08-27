@@ -1,17 +1,8 @@
 import { db } from '@/lib/db';
-import { useEffect, useState } from 'react';
+import { useLiveQuery } from 'dexie-react-hooks';
 
 export function useAllProjects() {
-  const [allProjects, setAllProjects] = useState<string[]>([]);
+  const allProjects = useLiveQuery(() => db.projects.toCollection().keys(), []);
 
-  useEffect(() => {
-    db.projects
-      .toCollection()
-      .keys()
-      .then(key => {
-        setAllProjects(key as string[]);
-      });
-  }, []);
-
-  return { allProjects, setAllProjects };
+  return allProjects as (string[] | undefined);
 }

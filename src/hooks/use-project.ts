@@ -4,8 +4,10 @@ import { MiroLang } from '@/lib/lang-miro/parser';
 import {
   Relationship,
   Table,
+  extractRelationshipsFromEdges,
   extractRelationshipsFromTables,
   generateRelationshipId,
+  getRelationshipsChanges,
   getTablesChanges,
   isValidRelationship,
 } from '@/lib/table';
@@ -21,7 +23,6 @@ import {
   applyEdgeChanges,
   applyNodeChanges,
 } from 'reactflow';
-import { usePathname } from 'next/navigation';
 import { db } from '@/lib/db';
 
 type ProjectKey = keyof Project;
@@ -194,15 +195,30 @@ export function useProject() {
   const removeEdge = useCallback(
     (edgeId: string) => {
       if (!project) return;
+
+      // const mirolang = new MiroLang(code);
+
+      // const updatedWithoutRelationship = mirolang.removeRelationship(edgeId);
+
+      // setCode(prev => updatedWithoutRelationship ?? prev);
+
       setProject('edges', prev => prev.filter(edge => edge.id !== edgeId));
+    },
+    [project, setProject],
+  );
+
+  const handldeRemoveEdge = useCallback(
+    (edgeId: string) => {
+      if (!project) return;
 
       const mirolang = new MiroLang(code);
 
       const updatedWithoutRelationship = mirolang.removeRelationship(edgeId);
+      console.log('updatedWithoutRelationship', updatedWithoutRelationship);
 
       setCode(prev => updatedWithoutRelationship ?? prev);
     },
-    [project, setProject, setCode, code],
+    [project, code, setCode],
   );
 
   const onEdgesChange = useCallback(
@@ -242,8 +258,6 @@ export function useProject() {
     (newTables: Table[]) => {
       if (!project) return;
 
-      setProject('tables', newTables);
-
       const { addedTables, updatedTables, removedTables } = getTablesChanges({
         newTableArray: newTables,
         oldTableArray: project.tables,
@@ -269,8 +283,19 @@ export function useProject() {
       });
 
       const newRelationships = extractRelationshipsFromTables(newTables);
+      const oldRelationships = extractRelationshipsFromEdges(project.edges);
 
-      newRelationships.forEach(relationship => {
+      const { addedRelationships, removedRelationships } =
+        getRelationshipsChanges({
+          newRelationships,
+          oldRelationships,
+        });
+
+      removedRelationships.forEach(relationship => {
+        removeEdge(generateRelationshipId(relationship));
+      });
+
+      addedRelationships.forEach(relationship => {
         connectEdge({
           id: generateRelationshipId(relationship),
           source: relationship.source.tableName,
@@ -281,8 +306,11 @@ export function useProject() {
           type: 'button-edge',
         });
       });
+
+      setProject('tables', newTables);
     },
     [
+      removeEdge,
       project,
       addNode,
       removeNode,
@@ -319,5 +347,6 @@ export function useProject() {
     onEdgesChange,
     addTable,
     removeTable,
+    handldeRemoveEdge,
   };
 }
