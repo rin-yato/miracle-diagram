@@ -23,7 +23,6 @@ import {
   applyEdgeChanges,
   applyNodeChanges,
 } from 'reactflow';
-import { usePathname } from 'next/navigation';
 import { db } from '@/lib/db';
 
 type ProjectKey = keyof Project;
@@ -196,15 +195,30 @@ export function useProject() {
   const removeEdge = useCallback(
     (edgeId: string) => {
       if (!project) return;
+
+      // const mirolang = new MiroLang(code);
+
+      // const updatedWithoutRelationship = mirolang.removeRelationship(edgeId);
+
+      // setCode(prev => updatedWithoutRelationship ?? prev);
+
       setProject('edges', prev => prev.filter(edge => edge.id !== edgeId));
+    },
+    [project, setProject],
+  );
+
+  const handldeRemoveEdge = useCallback(
+    (edgeId: string) => {
+      if (!project) return;
 
       const mirolang = new MiroLang(code);
 
       const updatedWithoutRelationship = mirolang.removeRelationship(edgeId);
+      console.log('updatedWithoutRelationship', updatedWithoutRelationship);
 
       setCode(prev => updatedWithoutRelationship ?? prev);
     },
-    [project, setProject, code, setCode],
+    [project, code, setCode],
   );
 
   const onEdgesChange = useCallback(
@@ -333,5 +347,6 @@ export function useProject() {
     onEdgesChange,
     addTable,
     removeTable,
+    handldeRemoveEdge,
   };
 }

@@ -26,12 +26,7 @@ export function CodeEditor() {
       indentWithTab={false}
       autoFocus={false}
       basicSetup={{
-        tabSize: 2,
-        indentOnInput: true,
         defaultKeymap: false,
-        completionKeymap: false,
-        drawSelection: false,
-        lintKeymap: false,
       }}
       extensions={[miro()]}
     />

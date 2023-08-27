@@ -29,11 +29,11 @@ export function ButtonEdgeRaw({
     useCallback(store => store.nodeInternals.get(target), [target]),
   );
 
-  const { removeEdge } = useProject();
+  const { handldeRemoveEdge } = useProject();
 
-  const handleRemoveEdge = useCallback(() => {
-    removeEdge(id);
-  }, [id, removeEdge]);
+  const handleRemoveEdgeClick = useCallback(() => {
+    handldeRemoveEdge(id);
+  }, [id, handldeRemoveEdge]);
 
   if (!sourceNode || !targetNode) return null;
 
@@ -78,7 +78,7 @@ export function ButtonEdgeRaw({
               size="icon"
               variant="outline"
               className="w-6 h-6 rounded-full"
-              onClick={handleRemoveEdge}
+              onClick={handleRemoveEdgeClick}
             >
               <Icons.X className="w-4 h-4" />
             </Button>

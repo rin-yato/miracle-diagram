@@ -9,7 +9,13 @@ import {
   syntaxTree,
 } from '@codemirror/language';
 import { parser } from './grammar/miro';
-import { acceptCompletion, autocompletion, completionStatus, moveCompletionSelection, startCompletion } from '@codemirror/autocomplete';
+import {
+  acceptCompletion,
+  autocompletion,
+  completionStatus,
+  moveCompletionSelection,
+  startCompletion,
+} from '@codemirror/autocomplete';
 import { MiroHighlighting, MiroStyleTags } from './highlight';
 import { linter, Diagnostic } from '@codemirror/lint';
 import {
@@ -18,7 +24,11 @@ import {
   miroTypeCompletion,
 } from './completions';
 import { keymap } from '@codemirror/view';
-import { defaultKeymap, insertNewline, insertTab } from '@codemirror/commands';
+import {
+  defaultKeymap,
+  insertNewlineAndIndent,
+  insertTab,
+} from '@codemirror/commands';
 
 let parserWithMetadata = parser.configure({
   props: [
@@ -92,7 +102,7 @@ export function miro() {
           if (completionStatus(target.state) === 'active') {
             acceptCompletion(target);
           } else {
-            insertNewline(target);
+            insertNewlineAndIndent(target);
           }
           return true;
         },
@@ -105,6 +115,5 @@ export function miro() {
       },
       ...defaultKeymap,
     ]),
-    indentUnit.of('  '),
   ]);
 }
