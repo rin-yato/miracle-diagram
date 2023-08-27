@@ -5,10 +5,11 @@ import {
   foldInside,
   foldNodeProp,
   indentNodeProp,
+  indentUnit,
   syntaxTree,
 } from '@codemirror/language';
 import { parser } from './grammar/miro';
-import { autocompletion } from '@codemirror/autocomplete';
+import { acceptCompletion, autocompletion, completionStatus, moveCompletionSelection, startCompletion } from '@codemirror/autocomplete';
 import { MiroHighlighting, MiroStyleTags } from './highlight';
 import { linter, Diagnostic } from '@codemirror/lint';
 import {
@@ -16,6 +17,8 @@ import {
   miroRelationshipCompletion,
   miroTypeCompletion,
 } from './completions';
+import { keymap } from '@codemirror/view';
+import { defaultKeymap, insertNewline, insertTab } from '@codemirror/commands';
 
 let parserWithMetadata = parser.configure({
   props: [
@@ -69,5 +72,39 @@ export function miro() {
         miroRelationshipCompletion,
       ],
     }),
+    keymap.of([
+      {
+        key: 'Tab',
+        preventDefault: true,
+        run: target => {
+          if (completionStatus(target.state) === 'active') {
+            moveCompletionSelection(true)(target);
+          } else {
+            insertTab(target);
+          }
+          return true;
+        },
+      },
+      {
+        key: 'Enter',
+        preventDefault: true,
+        run: target => {
+          if (completionStatus(target.state) === 'active') {
+            acceptCompletion(target);
+          } else {
+            insertNewline(target);
+          }
+          return true;
+        },
+      },
+      {
+        key: 'Ctrl-Space',
+        mac: 'Cmd-i',
+        preventDefault: true,
+        run: startCompletion,
+      },
+      ...defaultKeymap,
+    ]),
+    indentUnit.of('  '),
   ]);
 }

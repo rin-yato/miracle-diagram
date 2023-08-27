@@ -4,8 +4,10 @@ import { MiroLang } from '@/lib/lang-miro/parser';
 import {
   Relationship,
   Table,
+  extractRelationshipsFromEdges,
   extractRelationshipsFromTables,
   generateRelationshipId,
+  getRelationshipsChanges,
   getTablesChanges,
   isValidRelationship,
 } from '@/lib/table';
@@ -202,7 +204,7 @@ export function useProject() {
 
       setCode(prev => updatedWithoutRelationship ?? prev);
     },
-    [project, setProject, setCode, code],
+    [project, setProject, code, setCode],
   );
 
   const onEdgesChange = useCallback(
@@ -242,8 +244,6 @@ export function useProject() {
     (newTables: Table[]) => {
       if (!project) return;
 
-      setProject('tables', newTables);
-
       const { addedTables, updatedTables, removedTables } = getTablesChanges({
         newTableArray: newTables,
         oldTableArray: project.tables,
@@ -269,8 +269,19 @@ export function useProject() {
       });
 
       const newRelationships = extractRelationshipsFromTables(newTables);
+      const oldRelationships = extractRelationshipsFromEdges(project.edges);
 
-      newRelationships.forEach(relationship => {
+      const { addedRelationships, removedRelationships } =
+        getRelationshipsChanges({
+          newRelationships,
+          oldRelationships,
+        });
+
+      removedRelationships.forEach(relationship => {
+        removeEdge(generateRelationshipId(relationship));
+      });
+
+      addedRelationships.forEach(relationship => {
         connectEdge({
           id: generateRelationshipId(relationship),
           source: relationship.source.tableName,
@@ -281,8 +292,11 @@ export function useProject() {
           type: 'button-edge',
         });
       });
+
+      setProject('tables', newTables);
     },
     [
+      removeEdge,
       project,
       addNode,
       removeNode,
