@@ -19,7 +19,11 @@ import { MiroHighlighting, MiroStyleTags } from './highlight';
 import { linter, Diagnostic } from '@codemirror/lint';
 import { allIconNames } from '@/components/icons';
 import { SyntaxNode } from '@lezer/common';
-import { iconCompletion, miroTypeCompletion } from './completions';
+import {
+  iconCompletion,
+  miroRelationshipCompletion,
+  miroTypeCompletion,
+} from './completions';
 
 let parserWithMetadata = parser.configure({
   props: [
@@ -54,10 +58,11 @@ export const MiroLinter = linter(view => {
         diagnostics.push({
           from: node.from,
           to: node.to,
-          severity: 'error',
+          severity: 'info',
           message: 'Syntax Error!',
         });
     });
+
   return diagnostics;
 });
 
@@ -66,7 +71,11 @@ export function miro() {
     MiroHighlighting,
     MiroLinter,
     autocompletion({
-      override: [miroTypeCompletion, iconCompletion],
+      override: [
+        miroTypeCompletion,
+        iconCompletion,
+        miroRelationshipCompletion,
+      ],
     }),
   ]);
 }

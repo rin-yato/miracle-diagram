@@ -20,7 +20,6 @@ export const completion = (
 
 export const iconCompletion = completion((context, node) => {
   if (
-    node.prevSibling?.name === 'TableName' ||
     node.nextSibling?.name === '{' ||
     node.parent?.name === 'Icon'
   ) {
@@ -40,25 +39,110 @@ export const iconCompletion = completion((context, node) => {
   return null;
 });
 
+const defaultTypes = [
+  { label: 'string', type: 'type' },
+  { label: 'number', type: 'type' },
+  { label: 'boolean', type: 'type' },
+  { label: 'int', type: 'type' },
+  { label: 'float', type: 'type' },
+  { label: 'date', type: 'type' },
+];
+
 export const miroTypeCompletion = completion((context, node) => {
-  if (node.type.name !== 'ColumnType') return null;
+  if (!['Column', 'ColumnType'].includes(node.type.name)) return null;
 
-  // match if there is a word and space
-  const match = context.matchBefore(/\w\s+\w+/);
+  const filter = node.type.name === 'ColumnType';
 
-  if (match) {
+  const from = node.type.name === 'ColumnType' ? node.from : context.pos;
+
+  const tree = syntaxTree(context.state).resolveInner(0);
+
+  const tables = tree.getChildren('Table');
+
+  const columns = tables.flatMap(table => table.getChildren('Column'));
+
+  const columnTypes = columns.flatMap(column =>
+    column.getChildren('ColumnType'),
+  );
+
+  const typeStrings = columnTypes.map(type =>
+    context.state.sliceDoc(type.from, type.to),
+  );
+
+  // remove duplicates and filter the last one out
+  const removedDuplicates = Array.from(new Set(typeStrings)).slice(0, -1);
+
+  const types = removedDuplicates.map(type => ({
+    label: type,
+    type: 'type',
+  }));
+
+  return {
+    from,
+    filter,
+    options: [defaultTypes, types].flat(),
+  };
+});
+
+export const miroRelationshipCompletion = completion((context, node) => {
+  if (node.parent?.name !== 'Relationship' && node.name !== 'Relationship')
+    return null;
+
+  const tree = syntaxTree(context.state).resolveInner(0);
+
+  const tables = tree.getChildren('Table').map(tableNode => {
+    const tableNameNode = tableNode.getChild('TableName');
+    const tableName = context.state.sliceDoc(
+      tableNameNode?.from,
+      tableNameNode?.to,
+    );
+    const columns = tableNode
+      .getChildren('Column')
+      .map(columnNode =>
+        context.state.sliceDoc(
+          columnNode.firstChild?.from,
+          columnNode.firstChild?.to,
+        ),
+      );
+
     return {
-      from: node.from,
-      options: [
-        { label: 'string', type: 'type' },
-        { label: 'number', type: 'type' },
-        { label: 'boolean', type: 'type' },
-        { label: 'int', type: 'type' },
-        { label: 'float', type: 'type' },
-        { label: 'date', type: 'type' },
-      ],
+      name: tableName,
+      columns,
     };
+  });
+
+  let options: Array<{ label: string; type: string }> = [];
+  let from: number;
+
+  if (node.name === 'TableName' || node.name === 'Relationship') {
+    from = node.name === 'TableName' ? node.from : context.pos;
+    options = tables.map(table => ({
+      label: table.name,
+      type: 'table',
+    }));
+  } else if (node.name === 'ColumnName' || node.name === '.') {
+    from = node.from + 1;
+
+    const tableNameNode = node.prevSibling;
+    const tableName = context.state.sliceDoc(
+      tableNameNode?.from,
+      tableNameNode?.to,
+    );
+
+    const table = tables.find(table => table.name === tableName);
+
+    if (table) {
+      options = table.columns.map(column => ({
+        label: column,
+        type: 'column',
+      }));
+    }
+  } else {
+    return null;
   }
 
-  return null;
+  return {
+    from,
+    options,
+  };
 });

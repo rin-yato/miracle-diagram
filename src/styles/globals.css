@@ -131,3 +131,11 @@
   content: '🔥' !important;
   font-size: 1rem !important;
 }
+
+.cm-completionIcon-table::after {
+  content: '📂' !important;
+}
+
+.cm-completionIcon-column::after {
+  content: '🏷️' !important;
+}

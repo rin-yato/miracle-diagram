@@ -57,10 +57,6 @@ export function Flow() {
     [setProject],
   );
 
-  useEffect(() => {
-    console.log('project', project);
-  }, [project]);
-
   return (
     <ReactFlow
       fitView
