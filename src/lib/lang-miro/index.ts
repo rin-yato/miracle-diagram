@@ -8,17 +8,9 @@ import {
   syntaxTree,
 } from '@codemirror/language';
 import { parser } from './grammar/miro';
-import {
-  autocompletion,
-  completeFromList,
-  completeAnyWord,
-  CompletionContext,
-  CompletionResult,
-} from '@codemirror/autocomplete';
+import { autocompletion } from '@codemirror/autocomplete';
 import { MiroHighlighting, MiroStyleTags } from './highlight';
 import { linter, Diagnostic } from '@codemirror/lint';
-import { allIconNames } from '@/components/icons';
-import { SyntaxNode } from '@lezer/common';
 import {
   iconCompletion,
   miroRelationshipCompletion,
@@ -58,7 +50,7 @@ export const MiroLinter = linter(view => {
         diagnostics.push({
           from: node.from,
           to: node.to,
-          severity: 'info',
+          severity: 'error',
           message: 'Syntax Error!',
         });
     });
