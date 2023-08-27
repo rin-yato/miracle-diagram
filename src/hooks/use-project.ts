@@ -38,8 +38,8 @@ export function useProject() {
       .get(currentProject)
       .then(found => {
         if (found) {
-          setCode(found.code);
           setProjectRaw(found);
+          setCode(found.code);
         } else {
           setProjectRaw({
             id: 'example',
@@ -166,7 +166,6 @@ export function useProject() {
 
   const onDragConnect = useCallback(
     (params: Edge | Connection) => {
-      console.log('onDragConnect');
       if (!project) return;
 
       const relationship: Relationship = {
@@ -186,7 +185,6 @@ export function useProject() {
       const mirolang = new MiroLang(code);
 
       const updatedWithRelationship = mirolang.addRelationship(relationship);
-      console.log('updatedWithRelationship', updatedWithRelationship);
 
       setCode(prev => updatedWithRelationship ?? prev);
     },

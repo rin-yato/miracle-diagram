@@ -18,6 +18,12 @@ import {
 import { MiroHighlighting, MiroStyleTags } from './highlight';
 import { linter, Diagnostic } from '@codemirror/lint';
 import { allIconNames } from '@/components/icons';
+import { SyntaxNode } from '@lezer/common';
+import {
+  iconCompletion,
+  miroRelationshipCompletion,
+  miroTypeCompletion,
+} from './completions';
 
 let parserWithMetadata = parser.configure({
   props: [
@@ -43,46 +49,7 @@ export const miroLanguage = LRLanguage.define({
   parser: parserWithMetadata,
 });
 
-export const miroDefaultCompletion = completeFromList([
-  { label: 'string', type: 'keyword' },
-  { label: 'number', type: 'keyword' },
-  { label: 'boolean', type: 'keyword' },
-  { label: 'int', type: 'keyword' },
-  { label: 'float', type: 'keyword' },
-  { label: 'date', type: 'keyword' },
-]);
-
-export const iconCompletion = completeFromList(
-  allIconNames.map(icon => ({
-    label: `i-${icon}`,
-    type: 'icon',
-  })),
-);
-
-const miroTypeCompletion = (
-  context: CompletionContext,
-): CompletionResult | null => {
-  // match if there is a word and space
-  const match = context.matchBefore(/\w\s+\w+/);
-
-  if (match) {
-    return {
-      from: context.pos,
-      options: [
-        { label: 'string', type: 'type' },
-        { label: 'number', type: 'type' },
-        { label: 'boolean', type: 'type' },
-        { label: 'int', type: 'type' },
-        { label: 'float', type: 'type' },
-        { label: 'date', type: 'type' },
-      ],
-    };
-  }
-
-  return null;
-};
-
-const MiroLinter = linter(view => {
+export const MiroLinter = linter(view => {
   let diagnostics: Diagnostic[] = [];
   syntaxTree(view.state)
     .cursor()
@@ -91,18 +58,11 @@ const MiroLinter = linter(view => {
         diagnostics.push({
           from: node.from,
           to: node.to,
-          severity: 'error',
+          severity: 'info',
           message: 'Syntax Error!',
-          actions: [
-            {
-              name: 'Remove',
-              apply(view, from, to) {
-                view.dispatch({ changes: { from, to } });
-              },
-            },
-          ],
         });
     });
+
   return diagnostics;
 });
 
@@ -111,7 +71,11 @@ export function miro() {
     MiroHighlighting,
     MiroLinter,
     autocompletion({
-      override: [miroTypeCompletion, completeAnyWord, iconCompletion],
+      override: [
+        miroTypeCompletion,
+        iconCompletion,
+        miroRelationshipCompletion,
+      ],
     }),
   ]);
 }

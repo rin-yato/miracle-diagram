@@ -5,7 +5,7 @@ export const MiroStyleTags = styleTags({
   ColumnName: t.propertyName,
   ColumnType: t.string,
   ColumnContraint: t.character,
-  TableName: t.name,
+  TableName: t.keyword,
   '{ }': t.brace,
 });
 

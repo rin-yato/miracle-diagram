@@ -26,6 +26,7 @@ Relationship { "->" TableName "." ColumnName }
   Name { $[A-Za-z_]+ }
   IconName { $[\[A-Za-z0-9_?\-\]]+ }
   "{" "}"
+  "."
 }
 
 @skip { space }

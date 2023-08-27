@@ -25,6 +25,7 @@ export function CodeEditor() {
       }}
       basicSetup={{
         tabSize: 2,
+        defaultKeymap: false,
       }}
       extensions={[miro()]}
     />
