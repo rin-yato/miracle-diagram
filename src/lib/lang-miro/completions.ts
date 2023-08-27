@@ -19,10 +19,7 @@ export const completion = (
 };
 
 export const iconCompletion = completion((context, node) => {
-  if (
-    node.nextSibling?.name === '{' ||
-    node.parent?.name === 'Icon'
-  ) {
+  if (node.nextSibling?.name === '{' || node.parent?.name === 'Icon') {
     const options = allIconNames.map(icon => ({
       label: `i-${icon}`,
       type: 'icon',
@@ -121,9 +118,13 @@ export const miroRelationshipCompletion = completion((context, node) => {
       type: 'table',
     }));
   } else if (node.name === 'ColumnName' || node.name === '.') {
-    from = node.from + 1;
+    from = node.name === 'ColumnName' ? node.from : context.pos;
 
-    const tableNameNode = node.prevSibling;
+    const tableNameNode =
+      node.name === 'ColumnName'
+        ? node.prevSibling?.prevSibling
+        : node.prevSibling;
+
     const tableName = context.state.sliceDoc(
       tableNameNode?.from,
       tableNameNode?.to,
