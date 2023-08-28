@@ -30,7 +30,7 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
-    "@uiw/codemirror-theme-material": "^4.21.9",
+    "@uiw/codemirror-theme-material": "^4.21.11",
     "@uiw/codemirror-theme-tokyo-night": "^4.21.9",
     "@uiw/react-codemirror": "^4.21.9",
     "@vercel/analytics": "^1.0.2",
