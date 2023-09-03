@@ -33,6 +33,10 @@ export function ImportExport() {
           <Icons.FileOutput className="mr-2 h-4 w-4" />
           <span>Export Json</span>
         </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Icons.Image className="mr-2 h-4 w-4" />
+          <span>Export PNG</span>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

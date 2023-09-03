@@ -32,6 +32,7 @@ import {
   FileInput,
   FileOutput,
   X,
+  Image
 } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import dynamicIconImport from 'lucide-react/dynamicIconImports';
@@ -72,6 +73,7 @@ export const Icons = {
   MoreHorizontal,
   IterationCw,
   X,
+  Image,
   Stars: (props: LucideProps) => (
     <svg
       width="26"
