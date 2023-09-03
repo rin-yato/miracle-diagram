@@ -21,16 +21,16 @@ Done
 - [x] Import and export diagrams
 - [x] Light and dark theme
 - [x] Table with Icon
+- [x] Save to browser storage
+- [x] Nicer auto complete
+- [x] Multi projects
 
 Todo
 - [ ] Landing and Documentation page
 - [ ] Table with color
 - [ ] Table and column with notes
 - [ ] Export to image
-- [ ] Save to browser storage
-- [ ] Multi projects
 - [ ] Share project with link (public and private)
-- [ ] Nicer auto complete
 - [ ] Better error description
 - [ ] Better Nodes and edges positioning
 
