@@ -13,7 +13,7 @@ import { Icons } from '../icons';
 import { useImportExport } from '@/hooks/use-import-export';
 
 export function ImportExport() {
-  const { exportToJson, importFromJson } = useImportExport();
+  const { exportToJson, importFromJson, exportToPng } = useImportExport();
 
   return (
     <DropdownMenu>
@@ -33,8 +33,8 @@ export function ImportExport() {
           <Icons.FileOutput className="mr-2 h-4 w-4" />
           <span>Export Json</span>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Icons.Image className="mr-2 h-4 w-4" />
+        <DropdownMenuItem onClick={exportToPng}>
+          <Icons.FileOutput className="mr-2 h-4 w-4" />
           <span>Export PNG</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

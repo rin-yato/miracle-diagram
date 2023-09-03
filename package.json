@@ -39,6 +39,7 @@
     "cmdk": "^0.2.0",
     "dexie": "^3.2.4",
     "dexie-react-hooks": "^1.1.6",
+    "html-to-image": "^1.11.11",
     "jotai": "^2.4.0",
     "lodash": "^4.17.21",
     "lucide-react": "0.268.0",
