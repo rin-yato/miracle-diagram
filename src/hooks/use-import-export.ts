@@ -10,17 +10,17 @@ export function useImportExport() {
   const exportToJson = useCallback(() => {
     const data = JSON.stringify(project);
 
-    const a = document.createElement("a");
+    const anchor = document.createElement("a");
 
-    a.href = URL.createObjectURL(new Blob([data], { type: "text/plain" }));
+    anchor.href = URL.createObjectURL(new Blob([data], { type: "text/plain" }));
 
-    a.setAttribute("download", "miro-lang.json");
+    anchor.setAttribute("download", "miro-lang.json");
 
-    document.body.appendChild(a);
+    document.body.appendChild(anchor);
 
-    a.click();
+    anchor.click();
 
-    document.body.removeChild(a);
+    document.body.removeChild(anchor);
   }, [project]);
 
   const importFromJson = useCallback(() => {
@@ -73,10 +73,13 @@ export function useImportExport() {
     };
 
     const downloadImage = (dataUrl: string) => {
-      const a = document.createElement("a");
-      a.setAttribute("download", `reactflow-${getDownloadTime()}.png`);
-      a.setAttribute("href", dataUrl);
-      a.click();
+      const anchor = document.createElement("a");
+      anchor.setAttribute(
+        "download",
+        `miracle-diagram-${getDownloadTime()}.png`
+      );
+      anchor.setAttribute("href", dataUrl);
+      anchor.click();
     };
 
     const imgWidth = 1024;
