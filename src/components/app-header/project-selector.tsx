@@ -65,9 +65,7 @@ export function ProjectSelector() {
     if (!allProjects) return;
 
     if (allProjects?.length < 2) {
-      toast.error(
-        'You only have one project. 🤨',
-      );
+      toast.error('You only have one project. 🤨');
       return;
     }
 
@@ -75,6 +73,7 @@ export function ProjectSelector() {
       await createConfirmation({
         title: `Are you sure you want to delete ${currentProject} project?`,
         description: `This is a permanent action, your project will be deleted forever.`,
+        type: 'destructive',
         onConfirm: () => {
           toast.promise(db.projects.delete(currentProject), {
             loading: 'Deleting project...',
