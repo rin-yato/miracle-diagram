@@ -1,8 +1,9 @@
-import { projectAtom } from "@/jotai/project-atom";
-import { useAtom } from "jotai";
-import { useCallback } from "react";
-import { getRectOfNodes, getTransformForBounds } from "reactflow";
-import { toPng } from "html-to-image";
+import { projectAtom } from '@/jotai/project-atom';
+import { useAtom } from 'jotai';
+import { useCallback } from 'react';
+import { getRectOfNodes, getTransformForBounds } from 'reactflow';
+import { toPng } from 'html-to-image';
+import { shallowCheckProject } from '@/lib/utils';
 
 export function useImportExport() {
   const [project, setProjectRaw] = useAtom(projectAtom);
@@ -10,11 +11,11 @@ export function useImportExport() {
   const exportToJson = useCallback(() => {
     const data = JSON.stringify(project);
 
-    const anchor = document.createElement("a");
+    const anchor = document.createElement('a');
 
-    anchor.href = URL.createObjectURL(new Blob([data], { type: "text/plain" }));
+    anchor.href = URL.createObjectURL(new Blob([data], { type: 'text/plain' }));
 
-    anchor.setAttribute("download", "miro-lang.json");
+    anchor.setAttribute('download', 'miro-lang.json');
 
     document.body.appendChild(anchor);
 
@@ -24,11 +25,11 @@ export function useImportExport() {
   }, [project]);
 
   const importFromJson = useCallback(() => {
-    const input = document.createElement("input");
+    const input = document.createElement('input');
 
-    input.type = "file";
+    input.type = 'file';
 
-    input.onchange = (e) => {
+    input.onchange = e => {
       const file = (e.target as HTMLInputElement).files?.[0];
 
       if (!file) {
@@ -42,7 +43,22 @@ export function useImportExport() {
 
         try {
           const project = JSON.parse(data);
-          setProjectRaw(project);
+
+          if (!shallowCheckProject(project)) return;
+
+          setProjectRaw(prev => {
+            if (!prev) {
+              return project;
+            } else {
+              return {
+                ...prev,
+                code: project.code,
+                edges: project.edges,
+                nodes: project.nodes,
+                tables: project.tables,
+              };
+            }
+          });
         } catch (error) {
           console.error(error);
         }
@@ -62,23 +78,23 @@ export function useImportExport() {
     const getDownloadTime = () => {
       const now = new Date(Date.now());
       const date_now = now
-        .toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
+        .toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
         })
-        .replaceAll(":", "-")
-        .replaceAll(" ", "");
+        .replaceAll(':', '-')
+        .replaceAll(' ', '');
 
       return date_now;
     };
 
     const downloadImage = (dataUrl: string) => {
-      const anchor = document.createElement("a");
+      const anchor = document.createElement('a');
       anchor.setAttribute(
-        "download",
-        `miracle-diagram-${getDownloadTime()}.png`
+        'download',
+        `miracle-diagram-${getDownloadTime()}.png`,
       );
-      anchor.setAttribute("href", dataUrl);
+      anchor.setAttribute('href', dataUrl);
       anchor.click();
     };
 
@@ -94,11 +110,11 @@ export function useImportExport() {
         imgWidth,
         imgHeight,
         0.5,
-        2
+        2,
       );
 
-      toPng(document.querySelector(".react-flow__viewport") as HTMLElement, {
-        backgroundColor: "#222222",
+      toPng(document.querySelector('.react-flow__viewport') as HTMLElement, {
+        backgroundColor: '#222222',
         width: imgWidth,
         height: imgHeight,
         style: {
@@ -106,7 +122,7 @@ export function useImportExport() {
           height: `${imgHeight}`,
           transform: `translate(${transform[0]}px, ${transform[1]}px) scale(${transform[2]})`,
         },
-      }).then((dataUrl) => downloadImage(dataUrl));
+      }).then(dataUrl => downloadImage(dataUrl));
     }
   }, [project]);
 

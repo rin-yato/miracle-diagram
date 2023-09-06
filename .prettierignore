@@ -4,3 +4,4 @@ public
 .next
 .deepsource.toml
 .pnpm-lock.yaml
+.vercel
