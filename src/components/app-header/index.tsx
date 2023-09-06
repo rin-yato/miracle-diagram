@@ -4,6 +4,9 @@ import Text from '../ui/text';
 import { ThemeToggle } from '../theme/toggle';
 import { ImportExport } from './import-export';
 import { ProjectSelector } from './project-selector';
+import { DocsSheet } from '../docs-sheet';
+import { Button } from '../ui/button';
+import Link from 'next/link';
 
 export function AppHeader() {
   return (
@@ -26,6 +29,15 @@ export function AppHeader() {
         <ProjectSelector />
         <ImportExport />
         <ThemeToggle />
+        <DocsSheet />
+        <Button asChild variant="outline" size="icon">
+          <Link
+            href="https://github.com/rin-yato/miracle-diagram"
+            target="_blank"
+          >
+            <Icons.GitHub size={22} />
+          </Link>
+        </Button>
       </div>
     </div>
   );
