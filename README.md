@@ -5,6 +5,12 @@
 Miracle Diagram is a tool for creating database diagrams in a simple and intuitive way. It uses simple code to represent database
 tables and relationships between them. Don't draw your diagrams, Just code them!
 
+![Demo](./public/miracle-diagram-light.png)
+
+![Demo](./public/miracle-diagram-demo-dark.png)
+
+![Demo](./public/miracle-diagram-demo-light.png)
+
 ## Conbritutions
 
 This is an open source project, so if you want to contribute, you can do it in the following ways:
