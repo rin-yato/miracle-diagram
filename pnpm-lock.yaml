@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -24,8 +24,8 @@ dependencies:
     specifier: ^1.0.4
     version: 1.0.4
   '@lezer/generator':
-    specifier: ^1.5.0
-    version: 1.5.0
+    specifier: ^1.5.1
+    version: 1.5.1
   '@lezer/highlight':
     specifier: ^1.1.6
     version: 1.1.6
@@ -369,8 +369,8 @@ packages:
     resolution: {integrity: sha512-lZHlk8p67x4aIDtJl6UQrXSOP6oi7dQR3W/geFVrENdA1JDaAJWldnVqVjPMJupbTKbzDfFcePfKttqVidS/dg==}
     dev: false
 
-  /@lezer/generator@1.5.0:
-    resolution: {integrity: sha512-RhZtwyAzsnqC+p6N4ptbBZ/PZR+0OxpYfHdB1OO5jJ6as05H+FXD+KMGXEtDq8LPZfoTuekJaJrXEcOeNrds2g==}
+  /@lezer/generator@1.5.1:
+    resolution: {integrity: sha512-vodJv2JPwsFsiBBHE463yBhvUI9TmhIu5duF/8MH304xNS6FyWH/vTyG61pjhERm5f+VBP94co0eiN+afWcvXw==}
     hasBin: true
     dependencies:
       '@lezer/common': 1.0.4
