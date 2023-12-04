@@ -33,7 +33,7 @@
     "@uiw/codemirror-theme-material": "^4.21.9",
     "@uiw/codemirror-theme-tokyo-night": "^4.21.9",
     "@uiw/react-codemirror": "^4.21.21",
-    "@vercel/analytics": "^1.0.2",
+    "@vercel/analytics": "^1.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
