@@ -11,7 +11,7 @@
     "grammar": "lezer-generator src/lib/lang-miro/grammar/miro.grammar -o src/lib/lang-miro/grammar/miro.ts"
   },
   "dependencies": {
-    "@codemirror/autocomplete": "^6.9.0",
+    "@codemirror/autocomplete": "^6.11.1",
     "@codemirror/commands": "^6.2.5",
     "@codemirror/language": "^6.9.0",
     "@codemirror/lint": "^6.4.0",
