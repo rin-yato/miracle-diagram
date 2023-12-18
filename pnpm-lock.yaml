@@ -140,8 +140,8 @@ devDependencies:
     specifier: ^4.14.197
     version: 4.14.197
   '@types/node':
-    specifier: 20.5.0
-    version: 20.5.0
+    specifier: 20.10.5
+    version: 20.10.5
   '@types/react':
     specifier: 18.2.20
     version: 18.2.20
@@ -1726,8 +1726,10 @@ packages:
     resolution: {integrity: sha512-BMVOiWs0uNxHVlHBgzTIqJYmj+PgCo4euloGF+5m4okL3rEYzM2EEv78mw8zWSMM57dM7kVIgJ2QDvwHSoCI5g==}
     dev: true
 
-  /@types/node@20.5.0:
-    resolution: {integrity: sha512-Mgq7eCtoTjT89FqNoTzzXg2XvCi5VMhRV6+I2aYanc6kQCBImeNaAYRs/DyoVqk1YEUJK5gN9VO7HRIdz4Wo3Q==}
+  /@types/node@20.10.5:
+    resolution: {integrity: sha512-nNPsNE65wjMxEKI93yOP+NPGGBJz/PoN3kZsVLee0XMiJolxSekEVD8wRwBUBqkwc7UWop0edW50yrCQW4CyRw==}
+    dependencies:
+      undici-types: 5.26.5
     dev: true
 
   /@types/prop-types@15.7.5:
@@ -4286,6 +4288,10 @@ packages:
       has-bigints: 1.0.2
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
+    dev: true
+
+  /undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
     dev: true
 
   /update-browserslist-db@1.0.11(browserslist@4.21.10):
