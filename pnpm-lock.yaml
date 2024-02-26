@@ -33,8 +33,8 @@ dependencies:
     specifier: ^1.3.10
     version: 1.3.10
   '@mantine/hooks':
-    specifier: ^6.0.19
-    version: 6.0.19(react@18.2.0)
+    specifier: ^7.6.0
+    version: 7.6.0(react@18.2.0)
   '@radix-ui/react-alert-dialog':
     specifier: ^1.0.4
     version: 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
@@ -389,10 +389,10 @@ packages:
       '@lezer/common': 1.1.1
     dev: false
 
-  /@mantine/hooks@6.0.19(react@18.2.0):
-    resolution: {integrity: sha512-YkmuB6kmoenU1PVuE8tLBA+6RJIY9hIsGyIQG1yuPAy6SLWNFT8g2T9YvI/psqsUbVIYGaNEXg8zq42xbxnD8Q==}
+  /@mantine/hooks@7.6.0(react@18.2.0):
+    resolution: {integrity: sha512-TUYM1uC2bF2DkkOfL8/fQQuwrNPQufg5H2uYoV9WaPyWtR+MlZs8UgbucVpOD2dEdVJjkfPOcQfi8Wim0gktmw==}
     peerDependencies:
-      react: '>=16.8.0'
+      react: ^18.2.0
     dependencies:
       react: 18.2.0
     dev: false
